@@ -1,1 +1,1 @@
-web: gunicorn ishare_project.wsgi
+web: gunicorn ishare_project.wsgi --bind 0.0.0.0:$PORT
