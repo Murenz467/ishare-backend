@@ -1,1 +1,1 @@
-web: gunicorn ishare_backend.wsgi
+web: gunicorn ishare_project.wsgi
