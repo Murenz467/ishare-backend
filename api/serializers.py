@@ -17,11 +17,17 @@ class DriverVerificationSerializer(serializers.ModelSerializer):
     user_email = serializers.CharField(source='user.email', read_only=True)
     user_id = serializers.IntegerField(source='user.id', read_only=True)
     
+    # ✅ FIX 1: Add the photo fields here so the server accepts them (Optional)
+    national_id_photo = serializers.ImageField(required=False, allow_null=True)
+    license_photo = serializers.ImageField(required=False, allow_null=True)
+
     class Meta:
         model = DriverVerification
         fields = [
             'id', 'user_id', 'user_username', 'user_email',
             'full_name', 'national_id', 'phone_number',
+            # ✅ FIX 2: Ensure photo fields are listed in Meta
+            'national_id_photo', 'license_photo',
             'status', 'submitted_at', 'reviewed_at', 'rejection_reason'
         ]
         read_only_fields = ['id', 'status', 'submitted_at', 'reviewed_at']
@@ -30,8 +36,6 @@ class DriverVerificationSerializer(serializers.ModelSerializer):
         name = value.strip()
         if len(name) < 3:
             raise serializers.ValidationError('Full name must be at least 3 characters.')
-        if not re.match(r'^[a-zA-Z\s]+$', name):
-            raise serializers.ValidationError('Full name should contain only letters.')
         if len(name.split()) < 2:
             raise serializers.ValidationError('Please provide first and last name.')
         return name
@@ -40,9 +44,7 @@ class DriverVerificationSerializer(serializers.ModelSerializer):
         clean_id = value.replace(' ', '')
         if len(clean_id) != 16 or not clean_id.isdigit():
             raise serializers.ValidationError('National ID must be exactly 16 numeric digits.')
-        if not clean_id.startswith('1'):
-            raise serializers.ValidationError('National ID must start with 1.')
-
+        
         user = self.context['request'].user
         if DriverVerification.objects.filter(
             national_id=clean_id,
@@ -52,43 +54,37 @@ class DriverVerificationSerializer(serializers.ModelSerializer):
         return clean_id
 
     def validate_phone_number(self, value):
+        # ✅ FIX 3: Completely rewritten Phone Logic
+        # 1. Remove everything except numbers and '+'
         clean = re.sub(r'[^\d+]', '', value)
+        
+        # 2. Normalize to local format (07...)
         if clean.startswith('+250'):
-            clean = clean[4:]
+            clean = '0' + clean[4:]
         elif clean.startswith('250'):
-            clean = clean[3:]
-        elif clean.startswith('0'):
-            clean = clean[1:]
+            clean = '0' + clean[3:]
+        
+        # 3. Ensure it starts with 07 and is 10 digits
+        if not clean.startswith('07') or len(clean) != 10:
+             raise serializers.ValidationError('Phone number must be a valid Rwanda number (e.g., 078XXXXXXX).')
 
-        if len(clean) != 9:
-            raise serializers.ValidationError('Phone number must have 9 digits.')
-        if not re.match(r'^07[2389]', clean):
-            raise serializers.ValidationError('Invalid Rwanda phone number.')
-
-        formatted = f'+250{clean}'
+        # 4. Save in Database as International Format (+250...)
+        formatted = f'+250{clean[1:]}'
+        
         user = self.context['request'].user
         if DriverVerification.objects.filter(
             phone_number=formatted,
             status=VerificationStatus.APPROVED
         ).exclude(user=user).exists():
             raise serializers.ValidationError('This phone number is already registered.')
+            
         return formatted
 
     def create(self, validated_data):
         user = self.context['request'].user
+        # Delete any previous pending request to avoid duplicates
         DriverVerification.objects.filter(user=user).delete()
         return DriverVerification.objects.create(user=user, **validated_data)
-
-
-class VerificationStatusSerializer(serializers.ModelSerializer):
-    verified = serializers.SerializerMethodField()
-
-    class Meta:
-        model = DriverVerification
-        fields = ['verified', 'status', 'submitted_at', 'reviewed_at', 'rejection_reason']
-
-    def get_verified(self, obj):
-        return obj.status == VerificationStatus.APPROVED
 
 
 # -------------------- USER + AUTH --------------------
