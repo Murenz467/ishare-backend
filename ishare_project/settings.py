@@ -1,5 +1,6 @@
 """
 Django settings for ishare_project project.
+Updated for Railway Deployment
 """
 import os
 import dj_database_url
@@ -13,13 +14,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-your-secret-key-here-change-this-in-production')
 
 # ✅ SECURITY: Smart logic for Production vs Local
-# If 'RENDER' is in the environment variables, we are in production (False).
-# Otherwise, we are local (True).
-DEBUG = 'RENDER' not in os.environ
+# On Railway, we usually set an environment variable specifically, or rely on DEBUG=False
+# If 'RAILWAY_ENVIRONMENT' is present, we are in production.
+if 'RAILWAY_ENVIRONMENT' in os.environ:
+    DEBUG = False
+else:
+    DEBUG = True
 
 # ✅ ALLOWED HOSTS
-# Allow everything for now to prevent "Invalid Host Header" errors on Railway/Render
 ALLOWED_HOSTS = ['*']
+
+# ✅ CSRF TRUSTED ORIGINS (CRITICAL FOR RAILWAY)
+# Django 4.0+ requires this for HTTPS sites. 
+# This allows the Railway domain to send data to your server.
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.railway.app',
+    'https://*.up.railway.app',
+]
 
 # Application definition
 INSTALLED_APPS = [
@@ -116,6 +127,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # ✅ MEDIA FILES (User Uploads like Car Photos)
+# Note: On Railway/Heroku, local files (Media) are deleted when the server restarts.
+# For production, you eventually need AWS S3 or Cloudinary. For now, this works for testing.
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -187,5 +200,6 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'murenzicharles24@gmail.com' 
-EMAIL_HOST_PASSWORD = 'mewx drrr tkgb xwjr' 
+# ✅ SECURITY UPDATE: Use Environment Variable
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD') 
 DEFAULT_FROM_EMAIL = 'ISHARE Support <murenzicharles24@gmail.com>'

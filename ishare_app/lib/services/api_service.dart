@@ -8,8 +8,8 @@ import '../models/trip_model.dart';
 import '../models/booking_model.dart';
 
 // ⚠️ NETWORK CONFIGURATION
-// ✅ PRODUCTION SERVER (Render)
-const String baseUrl = "https://ishare-api.onrender.com";
+
+const String baseUrl = "https://ishare-production.up.railway.app";
 
 class ApiService {
   final Dio _dio = Dio();
