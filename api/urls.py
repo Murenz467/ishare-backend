@@ -49,46 +49,30 @@ router.register(r'payments', PaymentViewSet, basename='payments')
 
 urlpatterns = [
     # ==================================
-    # 2. ROUTER ENDPOINTS
-    # ==================================
-    # This automatically includes:
-    # /bookings/driver-requests/
-    # /bookings/{id}/approve/
-    # /bookings/{id}/reject/
-    path('', include(router.urls)),
-
-    # ==================================
-    # 3. AUTHENTICATION
+    # 2. AUTHENTICATION (Specific paths first)
     # ==================================
     path('auth/token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    
-    # Password Reset (OTP Flow)
     path('auth/forgot-password/', ForgotPasswordView.as_view(), name='forgot-password'),
     path('auth/reset-password/', ResetPasswordView.as_view(), name='reset-password'),
 
     # ==================================
-    # 4. TRIP EXTRAS
+    # 3. CUSTOM ACTIONS (Must be BEFORE router)
     # ==================================
+    # Trips
     path('trips/recommended/', recommended_trips, name='recommended-trips'),
 
-    # ==================================
-    # 5. PAYMENTS EXTRAS
-    # ==================================
+    # Payments
     path('payments/booking/<int:booking_id>/', get_payment_by_booking, name='payment_by_booking'),
     path('payments/detail/<int:payment_id>/', get_payment_detail, name='payment_detail'),
     path('payments/admin/all/', get_all_payments_admin, name='all_payments_admin'),
 
-    # ==================================
-    # 6. DRIVER VERIFICATION (User Side)
-    # ==================================
+    # Driver Verification
     path('driver/verify/', submit_driver_verification, name='submit_verification'),
     path('driver/verification-status/', check_verification_status, name='verification_status'),
     path('driver/my-verification/', get_user_verification_details, name='user_verification_details'),
 
-    # ==================================
-    # 7. ADMIN VERIFICATION PANEL
-    # ==================================
+    # Admin Verification
     path('admin/verifications/pending/', list_pending_verifications, name='list_pending_verifications'),
     path('admin/verifications/all/', list_all_verifications, name='list_all_verifications'),
     path('admin/verifications/<int:verification_id>/approve/', approve_verification, name='approve_verification'),
@@ -96,4 +80,9 @@ urlpatterns = [
     path('admin/verifications/<int:verification_id>/', get_verification_details, name='get_verification_details'),
     path('admin/verifications/bulk-approve/', bulk_approve_verifications, name='bulk_approve_verifications'),
     path('admin/verifications/stats/', verification_statistics, name='verification_statistics'),
+
+    # ==================================
+    # 4. ROUTER ENDPOINTS (Catch-all last)
+    # ==================================
+    path('', include(router.urls)),
 ]
