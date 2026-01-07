@@ -22,7 +22,13 @@ else:
     DEBUG = True
 
 # ✅ ALLOWED HOSTS
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    '*',
+    'amiable-amazement-production-4d09.up.railway.app',  # Production Railway domain
+    'amiable-amazement.railway.internal',  # Railway internal service name
+    '*.railway.app',
+    '*.up.railway.app',
+]
 
 # ✅ CSRF TRUSTED ORIGINS (CRITICAL FOR RAILWAY)
 # Django 4.0+ requires this for HTTPS sites. 
@@ -30,6 +36,9 @@ ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = [
     'https://*.railway.app',
     'https://*.up.railway.app',
+    'https://amiable-amazement-production-4d09.up.railway.app',  # Production Railway domain
+    'https://amiable-amazement.railway.internal',  # Railway internal service
+    'http://amiable-amazement.railway.internal',   # Railway internal service (HTTP)
 ]
 
 # Application definition
@@ -141,6 +150,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:8000",
     "http://localhost:*",  # Flutter web dev server
     "http://127.0.0.1:*",  # Flutter web dev server
+    "https://amiable-amazement.railway.internal",  # Railway internal service
+    "http://amiable-amazement.railway.internal",   # Railway internal service
 ]
 
 # ✅ CRITICAL: Allow all origins for web (Flutter web uses dynamic ports)
