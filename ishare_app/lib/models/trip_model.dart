@@ -109,7 +109,9 @@ class DriverInfo {
   final String? lastName;
   final String email;
   final String? phoneNumber;
-  final bool isVerified; 
+  final bool isVerified;
+  // ✅ ADDED: Profile Picture field
+  final String? profilePicture;
 
   DriverInfo({
     required this.id,
@@ -118,7 +120,9 @@ class DriverInfo {
     this.lastName,
     required this.email,
     this.phoneNumber,
-    this.isVerified = false, 
+    this.isVerified = false,
+    // ✅ ADDED: Constructor Argument
+    this.profilePicture,
   });
 
   factory DriverInfo.fromJson(Map<String, dynamic> json) {
@@ -129,7 +133,9 @@ class DriverInfo {
       lastName: json['last_name'],
       email: json['email'],
       phoneNumber: json['phone_number'] ?? json['phone'],
-      isVerified: json['is_verified'] ?? false, 
+      isVerified: json['is_verified'] ?? false,
+      // ✅ ADDED: Parse from JSON
+      profilePicture: json['profile_picture'],
     );
   }
 

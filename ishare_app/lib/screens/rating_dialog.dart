@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart'; // ✅ Needed for API
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../constants/app_theme.dart';
 import '../../models/trip_model.dart';
-import '../../services/api_service.dart'; // ✅ Import your API service
+import '../../services/api_service.dart';
 
 class RateDriverDialog extends ConsumerStatefulWidget {
   final TripModel trip;
@@ -15,11 +15,11 @@ class RateDriverDialog extends ConsumerStatefulWidget {
 }
 
 class _RateDriverDialogState extends ConsumerState<RateDriverDialog> {
-  double _rating = 5.0; // Default to 5 stars (positive psychology)
+  double _rating = 5.0; // Default to 5 stars
   final TextEditingController _commentController = TextEditingController();
   bool _isSubmitting = false;
 
-  // ✅ Professional Touch: Quick Feedback Tags
+  // Professional Feedback Tags
   final List<String> _feedbackTags = [
     "Safe Driving",
     "Clean Car",
@@ -40,33 +40,45 @@ class _RateDriverDialogState extends ConsumerState<RateDriverDialog> {
 
     final apiService = ref.read(apiServiceProvider);
     
-    // Combine tags and comment into one string for the backend
+    // Combine tags and comment
     String finalComment = _commentController.text;
     if (_selectedTags.isNotEmpty) {
       finalComment += "\n[Tags: ${_selectedTags.join(', ')}]";
     }
 
     try {
-      // ✅ Call your backend (You need to add this method to ApiService)
-      await apiService.rateDriver(
-        tripId: widget.trip.id,
-        driverId: widget.trip.driver.id,
-        rating: _rating,
-        comment: finalComment,
-      );
+      // ✅ FIX: Explicitly send keys matching Django Serializer (trip_id, driver_id)
+      // We pass a Map (JSON) instead of named arguments to ensure keys are correct
+      await apiService.submitRating({
+        'trip_id': widget.trip.id,          // 👈 This was missing/named wrong before
+        'driver_id': widget.trip.driver.id,
+        'rating': _rating,
+        'comment': finalComment,
+      });
 
       if (mounted) {
         Navigator.pop(context); // Close dialog
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("Rating submitted! Thank you."),
-            backgroundColor: Colors.green,
-            behavior: SnackBarBehavior.floating,
+        
+        // Success Message
+        showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: const Icon(Icons.check_circle, color: Colors.green, size: 50),
+            content: const Text(
+              "Rating Submitted!",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            actions: [
+              TextButton(onPressed: () => Navigator.pop(ctx), child: const Text("OK"))
+            ],
           ),
         );
       }
     } catch (e) {
       if (mounted) {
+        Navigator.pop(context); // Close dialog on error too, or stay open?
+        // Usually better to keep open so they can retry, but showing snackbar is good
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Failed to submit: $e"), backgroundColor: Colors.red),
         );
@@ -82,6 +94,18 @@ class _RateDriverDialogState extends ConsumerState<RateDriverDialog> {
         ? widget.trip.driver.displayName 
         : widget.trip.driver.username;
 
+    // Safe Profile Picture Handling
+    final String? driverPic = widget.trip.driver.profilePicture;
+    
+    // Helper for HTTPS
+    String getValidUrl(String url) {
+      if (url.startsWith('http')) {
+        if (url.contains('127.0.0.1') || url.contains('localhost')) return url;
+        return url.replaceFirst('http://', 'https://');
+      }
+      return url.startsWith('/') ? "http://127.0.0.1:8000$url" : "http://127.0.0.1:8000/$url";
+    }
+
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       elevation: 0,
@@ -96,26 +120,36 @@ class _RateDriverDialogState extends ConsumerState<RateDriverDialog> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // 1. DRIVER AVATAR (Visual Context)
+            // 1. DRIVER AVATAR
             Container(
               padding: const EdgeInsets.all(3),
               decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
               child: CircleAvatar(
                 radius: 35,
                 backgroundColor: AppTheme.surfaceGrey,
-                backgroundImage: null, // Add widget.trip.driver.photoUrl here if available
-                child: Text(driverName[0].toUpperCase(), style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.grey)),
+                child: ClipOval(
+                   child: SizedBox(
+                     width: 70, height: 70,
+                     child: (driverPic != null && driverPic.isNotEmpty)
+                         ? Image.network(
+                             getValidUrl(driverPic),
+                             fit: BoxFit.cover,
+                             errorBuilder: (c, e, s) => Center(child: Text(driverName[0].toUpperCase(), style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.grey))),
+                           )
+                         : Center(child: Text(driverName[0].toUpperCase(), style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.grey))),
+                   ),
+                ),
               ),
             ),
             const SizedBox(height: 12),
             
-            // 2. HEADER TEXT
+            // 2. HEADER
             const Text("How was your ride?", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: AppTheme.textDark)),
             Text("with $driverName", style: const TextStyle(fontSize: 14, color: Colors.grey)),
             
             const SizedBox(height: 20),
 
-            // 3. RATING BAR (The Star of the show)
+            // 3. RATING BAR
             RatingBar.builder(
               initialRating: 5,
               minRating: 1,
@@ -129,7 +163,7 @@ class _RateDriverDialogState extends ConsumerState<RateDriverDialog> {
 
             const SizedBox(height: 20),
 
-            // 4. FEEDBACK TAGS (Only show if rating is good > 3, or distinct tags for bad rating)
+            // 4. FEEDBACK TAGS
             Wrap(
               spacing: 8,
               runSpacing: 8,
@@ -176,7 +210,7 @@ class _RateDriverDialogState extends ConsumerState<RateDriverDialog> {
 
             const SizedBox(height: 24),
 
-            // 6. ACTION BUTTONS
+            // 6. BUTTONS
             Row(
               children: [
                 Expanded(

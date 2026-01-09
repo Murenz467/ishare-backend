@@ -1564,6 +1564,12 @@ abstract class AppLocalizations {
   /// **'Today'**
   String get today;
 
+  /// No description provided for @tomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow'**
+  String get tomorrow;
+
   /// No description provided for @noRidesAvailable.
   ///
   /// In en, this message translates to:
@@ -2127,6 +2133,222 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Passenger'**
   String get passengerLabel;
+
+  /// No description provided for @loginRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Login Required'**
+  String get loginRequired;
+
+  /// No description provided for @loginToBookMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Please login to book a ride.'**
+  String get loginToBookMessage;
+
+  /// No description provided for @bookingSuccessMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking Successful! \n\nThe seat availability has been updated.'**
+  String get bookingSuccessMessage;
+
+  /// No description provided for @requestFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Request failed. Please try again.'**
+  String get requestFailed;
+
+  /// No description provided for @alreadyBookedError.
+  ///
+  /// In en, this message translates to:
+  /// **'You have already booked this ride.'**
+  String get alreadyBookedError;
+
+  /// No description provided for @requestBooking.
+  ///
+  /// In en, this message translates to:
+  /// **'Request Booking'**
+  String get requestBooking;
+
+  /// No description provided for @bannerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect. Split Costs.\nEnjoy the Ride.'**
+  String get bannerTitle;
+
+  /// No description provided for @bannerSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Find travelers heading your way and travel comfortably for less.'**
+  String get bannerSubtitle;
+
+  /// No description provided for @premiumClass.
+  ///
+  /// In en, this message translates to:
+  /// **'Premium Class'**
+  String get premiumClass;
+
+  /// No description provided for @premiumSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Luxury & Speed'**
+  String get premiumSubtitle;
+
+  /// No description provided for @standardComfort.
+  ///
+  /// In en, this message translates to:
+  /// **'Standard Comfort'**
+  String get standardComfort;
+
+  /// No description provided for @standardSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reliable daily rides'**
+  String get standardSubtitle;
+
+  /// No description provided for @economySaver.
+  ///
+  /// In en, this message translates to:
+  /// **'Economy Saver'**
+  String get economySaver;
+
+  /// No description provided for @economySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Best prices for you'**
+  String get economySubtitle;
+
+  /// No description provided for @noRidesFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No rides found'**
+  String get noRidesFound;
+
+  /// No description provided for @offerRideInstead.
+  ///
+  /// In en, this message translates to:
+  /// **'Offer a Ride instead?'**
+  String get offerRideInstead;
+
+  /// No description provided for @soldOut.
+  ///
+  /// In en, this message translates to:
+  /// **'SOLD OUT'**
+  String get soldOut;
+
+  /// No description provided for @oneSeatLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'Only 1 left!'**
+  String get oneSeatLeft;
+
+  /// No description provided for @seatsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} seats'**
+  String seatsCount(int count);
+
+  /// No description provided for @standardCar.
+  ///
+  /// In en, this message translates to:
+  /// **'Standard Car'**
+  String get standardCar;
+
+  /// No description provided for @amenityAC.
+  ///
+  /// In en, this message translates to:
+  /// **'AC'**
+  String get amenityAC;
+
+  /// No description provided for @amenityLuggage.
+  ///
+  /// In en, this message translates to:
+  /// **'Luggage'**
+  String get amenityLuggage;
+
+  /// No description provided for @amenityNoSmoking.
+  ///
+  /// In en, this message translates to:
+  /// **'No Smoking'**
+  String get amenityNoSmoking;
+
+  /// No description provided for @amenityMusic.
+  ///
+  /// In en, this message translates to:
+  /// **'Music'**
+  String get amenityMusic;
+
+  /// No description provided for @rideRequestsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Ride Requests'**
+  String get rideRequestsTitle;
+
+  /// No description provided for @noPendingRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'No pending requests'**
+  String get noPendingRequests;
+
+  /// No description provided for @caughtUpMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re all caught up! Check back later.'**
+  String get caughtUpMessage;
+
+  /// No description provided for @refresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get refresh;
+
+  /// No description provided for @unableToLoadRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to load requests'**
+  String get unableToLoadRequests;
+
+  /// No description provided for @tryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Try Again'**
+  String get tryAgain;
+
+  /// No description provided for @requestApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Request Approved'**
+  String get requestApproved;
+
+  /// No description provided for @requestRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Request Rejected'**
+  String get requestRejected;
+
+  /// No description provided for @requestingSeats.
+  ///
+  /// In en, this message translates to:
+  /// **'Requesting {count} Seat(s)'**
+  String requestingSeats(int count);
+
+  /// No description provided for @routeInfoUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Route info unavailable'**
+  String get routeInfoUnavailable;
+
+  /// No description provided for @reject.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject'**
+  String get reject;
+
+  /// No description provided for @acceptRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept Request'**
+  String get acceptRequest;
 }
 
 class _AppLocalizationsDelegate

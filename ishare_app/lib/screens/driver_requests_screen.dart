@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../constants/app_theme.dart';
 import '../../services/api_service.dart';
 import '../../models/booking_model.dart';
+// ✅ Import Localizations
+import 'package:ishare_app/l10n/app_localizations.dart';
 
 // =====================================================
 // ✅ PROVIDER LOGIC
@@ -34,13 +36,14 @@ class DriverRequestsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final requestsAsync = ref.watch(driverRequestsProvider);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: const Color(0xFFF4F6F9),
       appBar: AppBar(
-        title: const Text(
-          "Ride Requests", 
-          style: TextStyle(fontWeight: FontWeight.w700, color: AppTheme.textDark, fontSize: 18)
+        title: Text(
+          l10n.rideRequestsTitle, // "Ride Requests"
+          style: const TextStyle(fontWeight: FontWeight.w700, color: AppTheme.textDark, fontSize: 18)
         ),
         backgroundColor: Colors.white,
         elevation: 0,
@@ -60,7 +63,7 @@ class DriverRequestsScreen extends ConsumerWidget {
       body: requestsAsync.when(
         data: (requests) {
           if (requests.isEmpty) {
-            return _buildEmptyState(ref);
+            return _buildEmptyState(ref, l10n);
           }
           return RefreshIndicator(
             onRefresh: () async => ref.refresh(driverRequestsProvider),
@@ -70,18 +73,18 @@ class DriverRequestsScreen extends ConsumerWidget {
               itemCount: requests.length,
               separatorBuilder: (ctx, index) => const SizedBox(height: 16),
               itemBuilder: (context, index) {
-                return _RequestCard(booking: requests[index]);
+                return _RequestCard(booking: requests[index], l10n: l10n);
               },
             ),
           );
         },
         loading: () => const Center(child: CircularProgressIndicator(color: AppTheme.primaryBlue)),
-        error: (e, stack) => _buildErrorState(ref, e.toString()),
+        error: (e, stack) => _buildErrorState(ref, e.toString(), l10n),
       ),
     );
   }
 
-  Widget _buildEmptyState(WidgetRef ref) {
+  Widget _buildEmptyState(WidgetRef ref, AppLocalizations l10n) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -95,27 +98,27 @@ class DriverRequestsScreen extends ConsumerWidget {
             child: const Icon(Icons.inbox_rounded, size: 60, color: AppTheme.primaryBlue),
           ),
           const SizedBox(height: 20),
-          const Text(
-            "No pending requests", 
-            style: TextStyle(color: AppTheme.textDark, fontSize: 18, fontWeight: FontWeight.bold)
+          Text(
+            l10n.noPendingRequests, // "No pending requests"
+            style: const TextStyle(color: AppTheme.textDark, fontSize: 18, fontWeight: FontWeight.bold)
           ),
           const SizedBox(height: 8),
           Text(
-            "You're all caught up! Check back later.", 
+            l10n.caughtUpMessage, // "You're all caught up! Check back later."
             style: TextStyle(color: Colors.grey[500], fontSize: 14)
           ),
           const SizedBox(height: 30),
           TextButton.icon(
             onPressed: () => ref.refresh(driverRequestsProvider),
             icon: const Icon(Icons.refresh, color: AppTheme.primaryBlue),
-            label: const Text("Refresh", style: TextStyle(color: AppTheme.primaryBlue)),
+            label: Text(l10n.refresh, style: const TextStyle(color: AppTheme.primaryBlue)), // "Refresh"
           )
         ],
       ),
     );
   }
 
-  Widget _buildErrorState(WidgetRef ref, String error) {
+  Widget _buildErrorState(WidgetRef ref, String error, AppLocalizations l10n) {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(24.0),
@@ -124,17 +127,17 @@ class DriverRequestsScreen extends ConsumerWidget {
           children: [
             const Icon(Icons.error_outline_rounded, color: Colors.redAccent, size: 48),
             const SizedBox(height: 16),
-            const Text("Unable to load requests", style: TextStyle(fontWeight: FontWeight.bold)),
+            Text(l10n.unableToLoadRequests, style: const TextStyle(fontWeight: FontWeight.bold)), // "Unable to load requests"
             const SizedBox(height: 8),
             Text(error, textAlign: TextAlign.center, style: const TextStyle(color: Colors.grey, fontSize: 12)),
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () => ref.refresh(driverRequestsProvider), 
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppTheme.primaryBlue, // ✅ CHANGED TO BLUE
+                backgroundColor: AppTheme.primaryBlue,
                 foregroundColor: Colors.white,
               ),
-              child: const Text("Try Again")
+              child: Text(l10n.tryAgain) // "Try Again"
             )
           ],
         ),
@@ -148,7 +151,8 @@ class DriverRequestsScreen extends ConsumerWidget {
 // =====================================================
 class _RequestCard extends ConsumerStatefulWidget {
   final BookingModel booking;
-  const _RequestCard({required this.booking});
+  final AppLocalizations l10n;
+  const _RequestCard({required this.booking, required this.l10n});
 
   @override
   ConsumerState<_RequestCard> createState() => _RequestCardState();
@@ -166,10 +170,10 @@ class _RequestCardState extends ConsumerState<_RequestCard> {
     try {
       if (approve) {
         await api.approveBooking(widget.booking.id!);
-        if (mounted) _showToast("Request Approved", Colors.green);
+        if (mounted) _showToast(widget.l10n.requestApproved, Colors.green); // "Request Approved"
       } else {
         await api.rejectBooking(widget.booking.id!);
-        if (mounted) _showToast("Request Rejected", Colors.redAccent);
+        if (mounted) _showToast(widget.l10n.requestRejected, Colors.redAccent); // "Request Rejected"
       }
       ref.invalidate(driverRequestsProvider); 
     } catch (e) {
@@ -236,7 +240,7 @@ class _RequestCardState extends ConsumerState<_RequestCard> {
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: Text(
-                          "Requesting ${widget.booking.seatsBooked} Seat(s)",
+                          widget.l10n.requestingSeats(widget.booking.seatsBooked), // "Requesting {count} Seat(s)"
                           style: const TextStyle(fontSize: 11, color: AppTheme.primaryBlue, fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -275,7 +279,7 @@ class _RequestCardState extends ConsumerState<_RequestCard> {
                       const SizedBox(height: 16),
                       Text(trip.destinationName, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
                     ],
-                  ) : const Text("Route info unavailable", style: TextStyle(color: Colors.grey)),
+                  ) : Text(widget.l10n.routeInfoUnavailable, style: const TextStyle(color: Colors.grey)), // "Route info unavailable"
                 ),
               ],
             ),
@@ -297,7 +301,7 @@ class _RequestCardState extends ConsumerState<_RequestCard> {
                           padding: const EdgeInsets.symmetric(vertical: 14),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         ),
-                        child: const Text("Reject"),
+                        child: Text(widget.l10n.reject), // "Reject"
                       ),
                     ),
                     const SizedBox(width: 12),
@@ -305,13 +309,13 @@ class _RequestCardState extends ConsumerState<_RequestCard> {
                       child: ElevatedButton(
                         onPressed: () => _handleAction(true),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: AppTheme.primaryBlue, // ✅ CHANGED TO BLUE
+                          backgroundColor: AppTheme.primaryBlue, 
                           foregroundColor: Colors.white,
                           padding: const EdgeInsets.symmetric(vertical: 14),
                           elevation: 0,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         ),
-                        child: const Text("Accept Request"),
+                        child: Text(widget.l10n.acceptRequest), // "Accept Request"
                       ),
                     ),
                   ],

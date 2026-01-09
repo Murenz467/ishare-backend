@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter/foundation.dart' show kIsWeb, debugPrint; // For debugPrint
+import 'package:flutter/foundation.dart' show kIsWeb, debugPrint;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/user_model.dart';
@@ -9,7 +9,6 @@ import '../models/booking_model.dart';
 import '../models/subscription_model.dart';
 
 // ⚠️ NETWORK CONFIGURATION
-
 const String baseUrl = "https://amiable-amazement-production-4d09.up.railway.app";
 
 class ApiService {
@@ -381,7 +380,6 @@ class ApiService {
     }
   }
 
-  // ✅ UPDATED: Handles File Uploads for Verification Correctly
   Future<void> submitDriverVerification(Map<String, dynamic> data) async {
     try {
       final formData = FormData();
@@ -405,7 +403,6 @@ class ApiService {
       await _dio.post(
         '/api/driver/verify/', 
         data: formData,
-        // options: Options(contentType: 'multipart/form-data'), // Dio does this automatically with FormData
       );
       
       debugPrint('✅ Verification submitted successfully');
@@ -424,33 +421,26 @@ class ApiService {
       final response = await _dio.get('/api/driver/verification-status/');
       final data = response.data ?? {};
       
-      // Debug: Log the raw backend response
       debugPrint('📡 Raw Backend Response: $data');
-      debugPrint('   - is_verified: ${data['is_verified']} (${data['is_verified'].runtimeType})');
-      debugPrint('   - status: ${data['status']} (${data['status']?.runtimeType})');
       
       // Get status as string (handle both string and enum cases)
       final statusStr = data['status']?.toString().toLowerCase();
       final isVerified = data['is_verified'] == true || 
-                         data['is_verified'] == 'true' || 
-                         statusStr == 'approved';
+                       data['is_verified'] == 'true' || 
+                       statusStr == 'approved';
       
-      // Normalize the response to handle different backend formats
+      // Normalize the response
       final normalized = {
         'is_verified': isVerified,
         'status': statusStr ?? (isVerified ? 'approved' : 'none'),
         'has_pending': statusStr == 'pending',
-        // Keep all original fields
       };
       
-      // Add original data for backward compatibility (without overwriting normalized values)
       data.forEach((key, value) {
         if (!normalized.containsKey(key)) {
           normalized[key] = value;
         }
       });
-      
-      debugPrint('📦 Normalized Response: $normalized');
       
       return normalized;
     } catch (e) {
@@ -465,20 +455,14 @@ class ApiService {
       if (response.data != null) {
         final data = response.data;
         
-        // Get status as string (handle both string and enum cases)
         final statusStr = data['status']?.toString().toLowerCase();
         
-        // Check multiple possible formats from backend
         final isVerified = data['is_verified'] == true || 
-                          data['is_verified'] == 'true' ||
-                          statusStr == 'approved' ||
-                          data['verification_status']?.toString().toLowerCase() == 'approved';
+                           data['is_verified'] == 'true' ||
+                           statusStr == 'approved' ||
+                           data['verification_status']?.toString().toLowerCase() == 'approved';
         
-        if (isVerified) {
-          debugPrint('✅ Driver is verified (status: $statusStr, is_verified: ${data['is_verified']})');
-          return true;
-        }
-        debugPrint('⚠️ Driver verification status: ${statusStr ?? data['is_verified'] ?? 'unknown'}');
+        if (isVerified) return true;
       }
       return false;
     } catch (e) {
@@ -546,22 +530,26 @@ class ApiService {
     }
   }
 
-  // ✅ Rate Driver
-  Future<void> rateDriver({
-    required int tripId,
-    required int driverId,
-    required double rating,
-    required String comment,
-  }) async {
+  // ✅ ADDED THIS METHOD TO MATCH YOUR DIALOG (Handles Map data)
+  Future<void> submitRating(Map<String, dynamic> data) async {
     try {
-      final data = {
-        'trip': tripId,      
-        'ratee_id': driverId,   
-        'score': rating, 
-        'comment': comment,
-      };
-
       debugPrint('📤 Sending Rating Data: $data');
+      
+      // Map 'trip_id' to 'trip' if necessary (Django standard)
+      // If your backend serializer expects 'trip', we ensure it's mapped here.
+      if (data.containsKey('trip_id') && !data.containsKey('trip')) {
+        data['trip'] = data['trip_id'];
+      }
+      
+      // Rename 'driver_id' to 'ratee_id' if needed
+      if (data.containsKey('driver_id') && !data.containsKey('ratee_id')) {
+        data['ratee_id'] = data['driver_id'];
+      }
+      
+      // Rename 'rating' to 'score' if needed
+      if (data.containsKey('rating') && !data.containsKey('score')) {
+        data['score'] = data['rating'];
+      }
 
       await _dio.post('/api/ratings/', data: data);
       debugPrint('✅ Rating submitted successfully');
@@ -572,6 +560,22 @@ class ApiService {
       }
       rethrow;
     }
+  }
+
+  // Legacy method (kept for backward compatibility if used elsewhere)
+  Future<void> rateDriver({
+    required int tripId,
+    required int driverId,
+    required double rating,
+    required String comment,
+  }) async {
+    // Just forward to the new method
+    await submitRating({
+      'trip_id': tripId,
+      'driver_id': driverId,
+      'rating': rating,
+      'comment': comment,
+    });
   }
 
   // =====================================================
@@ -620,7 +624,7 @@ class ApiService {
       rethrow;
     }
   }
-} // ⬅️ 🛑 IMPORTANT: This closing brace ends the ApiService class!
+}
 
 // =====================================================
 // ✅ RIVERPOD PROVIDERS (MUST BE OUTSIDE THE CLASS)
@@ -652,7 +656,3 @@ final userProfileProvider = FutureProvider.autoDispose<UserProfileModel>((ref) a
   final apiService = ref.watch(apiServiceProvider);
   return await apiService.fetchMyProfile();
 });
-
-// =====================================================
-// SUBSCRIPTION METHODS
-// =====================================================

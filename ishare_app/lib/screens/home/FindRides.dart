@@ -62,18 +62,19 @@ class _FindRidesScreenState extends ConsumerState<FindRidesScreen> {
   // =====================================================
 
   void _showLoginDialog(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Login Required'),
-        content: const Text('Please login to book a ride.'),
+        title: Text(l10n.loginRequired), // "Login Required"
+        content: Text(l10n.loginToBookMessage), // "Please login to book a ride."
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(context), child: Text(l10n.cancel)),
           ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            child: const Text('Login'),
+            child: Text(l10n.login),
           ),
         ],
       ),
@@ -81,6 +82,7 @@ class _FindRidesScreenState extends ConsumerState<FindRidesScreen> {
   }
 
   Future<void> _processBooking(BuildContext context, WidgetRef ref, TripModel trip, int seats) async {
+    final l10n = AppLocalizations.of(context)!;
     // Show Loading
     showDialog(context: context, barrierDismissible: false, builder: (_) => const Center(child: CircularProgressIndicator()));
 
@@ -106,10 +108,10 @@ class _FindRidesScreenState extends ConsumerState<FindRidesScreen> {
           builder: (ctx) => AlertDialog(
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             title: const Icon(Icons.check_circle, color: Colors.green, size: 50),
-            content: const Text(
-              "Booking Successful! \n\nThe seat availability has been updated.",
+            content: Text(
+              l10n.bookingSuccessMessage, // "Booking Successful! \n\nThe seat availability has been updated."
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             ),
             actions: [
               TextButton(
@@ -124,7 +126,7 @@ class _FindRidesScreenState extends ConsumerState<FindRidesScreen> {
       if (context.mounted) {
         Navigator.pop(context); // Close Loader
         
-        String errorMessage = "Request failed. Please try again.";
+        String errorMessage = l10n.requestFailed; // "Request failed. Please try again."
         bool isUserError = false;
 
         if (e is DioException) {
@@ -132,9 +134,10 @@ class _FindRidesScreenState extends ConsumerState<FindRidesScreen> {
             final data = e.response?.data;
             if (data is Map<String, dynamic>) {
               if (data.containsKey('detail')) {
-                errorMessage = data['detail'].toString();
-                if (errorMessage.toLowerCase().contains("already booked")) {
-                   errorMessage = "You have already booked this ride.";
+                String detail = data['detail'].toString();
+                errorMessage = detail;
+                if (detail.toLowerCase().contains("already booked")) {
+                   errorMessage = l10n.alreadyBookedError; // "You have already booked this ride."
                    isUserError = true;
                 }
               } else if (data.containsKey('non_field_errors')) {
@@ -182,9 +185,9 @@ class _FindRidesScreenState extends ConsumerState<FindRidesScreen> {
     final today = DateTime(now.year, now.month, now.day);
     final tripDate = DateTime(trip.departureTime.year, trip.departureTime.month, trip.departureTime.day);
     if(tripDate == today) {
-      dateText = "Today";
+      dateText = l10n.today; // "Today"
     } else if (tripDate == today.add(const Duration(days: 1))) {
-      dateText = "Tomorrow";
+      dateText = l10n.tomorrow; // "Tomorrow"
     } else {
       dateText = DateFormat('MMM d').format(trip.departureTime);
     }
@@ -233,7 +236,7 @@ class _FindRidesScreenState extends ConsumerState<FindRidesScreen> {
               ],
             ),
             actions: [
-              TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel', style: TextStyle(color: Colors.grey))),
+              TextButton(onPressed: () => Navigator.pop(context), child: Text(l10n.cancel, style: const TextStyle(color: Colors.grey))),
               ElevatedButton(
                 onPressed: () => _processBooking(context, ref, trip, selectedSeats),
                 style: ElevatedButton.styleFrom(
@@ -241,7 +244,7 @@ class _FindRidesScreenState extends ConsumerState<FindRidesScreen> {
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
-                child: const Text('Request Booking'),
+                child: Text(l10n.requestBooking), // "Request Booking"
               ),
             ],
           ),
@@ -298,13 +301,13 @@ class _FindRidesScreenState extends ConsumerState<FindRidesScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          "Connect. Split Costs.\nEnjoy the Ride.",
-                          style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w800, height: 1.2),
+                        Text(
+                          l10n.bannerTitle, // "Connect. Split Costs.\nEnjoy the Ride."
+                          style: const TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w800, height: 1.2),
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          "Find travelers heading your way and travel comfortably for less.",
+                          l10n.bannerSubtitle, // "Find travelers heading your way and travel comfortably for less."
                           style: TextStyle(color: Colors.white.withOpacity(0.9), fontSize: 13, height: 1.4),
                         ),
                       ],
@@ -458,8 +461,8 @@ class _FindRidesScreenState extends ConsumerState<FindRidesScreen> {
                     
                     if (premiumRides.isNotEmpty) 
                       _buildCategoryBlock(
-                        title: "Premium Class",
-                        subtitle: "Luxury & Speed",
+                        title: l10n.premiumClass, // "Premium Class"
+                        subtitle: l10n.premiumSubtitle, // "Luxury & Speed"
                         icon: Icons.star_rounded,
                         color: Colors.orange[800]!,
                         rides: premiumRides,
@@ -468,8 +471,8 @@ class _FindRidesScreenState extends ConsumerState<FindRidesScreen> {
 
                     if (standardRides.isNotEmpty) 
                       _buildCategoryBlock(
-                        title: "Standard Comfort",
-                        subtitle: "Reliable daily rides",
+                        title: l10n.standardComfort, // "Standard Comfort"
+                        subtitle: l10n.standardSubtitle, // "Reliable daily rides"
                         icon: Icons.thumb_up_rounded,
                         color: AppTheme.primaryBlue,
                         rides: standardRides,
@@ -478,8 +481,8 @@ class _FindRidesScreenState extends ConsumerState<FindRidesScreen> {
 
                     if (economyRides.isNotEmpty) 
                       _buildCategoryBlock(
-                        title: "Economy Saver",
-                        subtitle: "Best prices for you",
+                        title: l10n.economySaver, // "Economy Saver"
+                        subtitle: l10n.economySubtitle, // "Best prices for you"
                         icon: Icons.savings_rounded,
                         color: Colors.green[700]!,
                         rides: economyRides,
@@ -613,51 +616,34 @@ class _FindRidesScreenState extends ConsumerState<FindRidesScreen> {
           ),
         ),
         children: [
-          // 1. THE MAP TILES (Background)
           TileLayer(
             urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
             userAgentPackageName: 'com.ishare.app',
           ),
-
-          // 2. THE ROUTE LINES (Blue Paths)
           PolylineLayer(
             polylines: trips.map((trip) {
-              final random = Random(trip.id); // Seed with ID for consistency
-              
-              // Simulate Start (Car Location)
+              final random = Random(trip.id);
               final startLat = -1.9441 + (random.nextDouble() - 0.5) * 0.05;
               final startLng = 30.0619 + (random.nextDouble() - 0.5) * 0.05;
-              
-              // Simulate Destination (Slightly offset from start)
-              // In real app: use double.parse(trip.destLat)
               final endLat = startLat + (random.nextBool() ? 0.02 : -0.02);
               final endLng = startLng + (random.nextBool() ? 0.02 : -0.02);
 
               return Polyline(
-                points: [
-                  LatLng(startLat, startLng),
-                  LatLng(endLat, endLng),
-                ],
+                points: [LatLng(startLat, startLng), LatLng(endLat, endLng)],
                 strokeWidth: 4.0,
-                color: AppTheme.primaryBlue.withOpacity(0.7), // Semi-transparent blue
-                
+                color: AppTheme.primaryBlue.withOpacity(0.7),
               );
             }).toList(),
           ),
-
-          // 3. THE MARKERS (Pins on top)
           MarkerLayer(
             markers: trips.expand((trip) {
               final random = Random(trip.id);
-              
-              // Recalculate same random points to match the lines
               final startLat = -1.9441 + (random.nextDouble() - 0.5) * 0.05;
               final startLng = 30.0619 + (random.nextDouble() - 0.5) * 0.05;
               final endLat = startLat + (random.nextBool() ? 0.02 : -0.02);
               final endLng = startLng + (random.nextBool() ? 0.02 : -0.02);
 
               return [
-                // Car Icon (Start)
                 Marker(
                   point: LatLng(startLat, startLng),
                   width: 50,
@@ -674,8 +660,6 @@ class _FindRidesScreenState extends ConsumerState<FindRidesScreen> {
                     ),
                   ),
                 ),
-                
-                // Destination Dot (End)
                 Marker(
                   point: LatLng(endLat, endLng),
                   width: 20,
@@ -704,10 +688,10 @@ class _FindRidesScreenState extends ConsumerState<FindRidesScreen> {
         children: [
           Icon(Icons.search_off_rounded, size: 60, color: Colors.grey[300]),
           const SizedBox(height: 24),
-          const Text('No rides found', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          Text(l10n.noRidesFound, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
           TextButton(
              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const CreateTripScreen())),
-             child: const Text("Offer a Ride instead?"),
+             child: Text(l10n.offerRideInstead),
           )
         ],
       ),
@@ -732,9 +716,9 @@ class _RideCardWithData extends ConsumerWidget {
     final tomorrow = today.add(const Duration(days: 1));
 
     if (tripDate == today) {
-      return "Today";
+      return l10n.today;
     } else if (tripDate == tomorrow) {
-      return "Tomorrow";
+      return l10n.tomorrow;
     } else {
       return DateFormat('EEE, MMM d').format(trip.departureTime);
     }
@@ -748,7 +732,6 @@ class _RideCardWithData extends ConsumerWidget {
       }
       return url.replaceFirst('http://', 'https://');
     }
-    // Handle relative paths
     return url.startsWith('/') ? "http://127.0.0.1:8000$url" : "http://127.0.0.1:8000/$url";
   }
 
@@ -823,15 +806,12 @@ class _RideCardWithData extends ConsumerWidget {
                               borderRadius: BorderRadius.circular(18),
                               color: AppTheme.surfaceGrey,
                             ),
-                            // ✅ FIXED: Using ClipRRect + Image.network + errorBuilder
-                            // This replaces "DecorationImage" which crashes on 404
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(18),
                               child: (trip.carPhotoUrl != null && trip.carPhotoUrl!.isNotEmpty)
                                   ? Image.network(
                                       _getValidUrl(trip.carPhotoUrl!),
                                       fit: BoxFit.cover,
-                                      // If the image is 404 or fails, show this icon instead of crashing
                                       errorBuilder: (context, error, stackTrace) {
                                         return Icon(Icons.directions_car_rounded, color: Colors.grey[400], size: 40);
                                       },
@@ -853,9 +833,9 @@ class _RideCardWithData extends ConsumerWidget {
                                     border: Border.all(color: Colors.white, width: 2),
                                     borderRadius: BorderRadius.circular(8)
                                   ),
-                                  child: const Text(
-                                    "SOLD OUT",
-                                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900, fontSize: 10, letterSpacing: 1.0),
+                                  child: Text(
+                                    l10n.soldOut, // "SOLD OUT"
+                                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w900, fontSize: 10, letterSpacing: 1.0),
                                   ),
                                 ),
                               ),
@@ -896,7 +876,7 @@ class _RideCardWithData extends ConsumerWidget {
                                       style: TextStyle(
                                         fontSize: 12, 
                                         fontWeight: FontWeight.bold, 
-                                        color: dateString == "Today" ? Colors.green : Colors.grey[600]
+                                        color: dateString == l10n.today ? Colors.green : Colors.grey[600]
                                       ),
                                     ),
                                     const SizedBox(height: 2),
@@ -937,7 +917,7 @@ class _RideCardWithData extends ConsumerWidget {
                                           Icon(seats == 1 ? Icons.local_fire_department : Icons.check_circle_outline, size: 10, color: seats == 1 ? Colors.orange[800] : Colors.green[800]),
                                           const SizedBox(width: 4),
                                           Text(
-                                            seats == 1 ? "Only 1 left!" : "$seats seats",
+                                            seats == 1 ? l10n.oneSeatLeft : l10n.seatsCount(seats),
                                             style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: seats == 1 ? Colors.orange[800] : Colors.green[800]),
                                           ),
                                         ],
@@ -951,7 +931,7 @@ class _RideCardWithData extends ConsumerWidget {
                             
                             // CAR NAME
                             Text(
-                              trip.carName ?? "Standard Car",
+                              trip.carName ?? l10n.standardCar, // "Standard Car"
                               style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16, color: AppTheme.textDark),
                               maxLines: 1, overflow: TextOverflow.ellipsis,
                             ),
@@ -961,13 +941,13 @@ class _RideCardWithData extends ConsumerWidget {
                             // AMENITIES ROW
                             Row(
                               children: [
-                                _buildAmenity(Icons.ac_unit_rounded, "AC", hasAC),
+                                _buildAmenity(Icons.ac_unit_rounded, l10n.amenityAC, hasAC),
                                 const SizedBox(width: 8),
-                                _buildAmenity(Icons.luggage_rounded, "Luggage", allowLuggage),
+                                _buildAmenity(Icons.luggage_rounded, l10n.amenityLuggage, allowLuggage),
                                 const SizedBox(width: 8),
-                                _buildAmenity(Icons.smoke_free_rounded, "No Smoking", noSmoking),
+                                _buildAmenity(Icons.smoke_free_rounded, l10n.amenityNoSmoking, noSmoking),
                                 const SizedBox(width: 8),
-                                _buildAmenity(Icons.music_note_rounded, "Music", hasMusic),
+                                _buildAmenity(Icons.music_note_rounded, l10n.amenityMusic, hasMusic),
                               ],
                             ),
 
@@ -1043,7 +1023,7 @@ class _RideCardWithData extends ConsumerWidget {
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                           ),
                           child: Text(
-                            isFull ? "SOLD OUT" : l10n.bookNow,
+                            isFull ? l10n.soldOut : l10n.bookNow,
                             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
                           ),
                         ),

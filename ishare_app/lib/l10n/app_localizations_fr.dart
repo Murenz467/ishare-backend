@@ -36,7 +36,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get enterDestination => 'Entrez la destination...';
 
   @override
-  String get quickActions => 'Actions Rapides';
+  String get quickActions => 'Actions rapides';
 
   @override
   String get findRide => 'Trouver un trajet';
@@ -51,13 +51,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get earnMoney => 'Gagner de l\'argent';
 
   @override
-  String get safetyCenter => 'Sécurité';
+  String get safetyCenter => 'Centre de sécurité';
 
   @override
   String get guidelines => 'Directives';
 
   @override
-  String get aboutUs => 'À Propos';
+  String get aboutUs => 'À propos d\'iShare';
 
   @override
   String get ourStory => 'Notre histoire';
@@ -72,22 +72,22 @@ class AppLocalizationsFr extends AppLocalizations {
   String get whyIshare => 'Pourquoi iShare ?';
 
   @override
-  String get saveCosts => 'Économiser';
+  String get saveCosts => 'Économisez';
 
   @override
-  String get saveCostsDesc => 'Voyagez moins cher.';
+  String get saveCostsDesc => 'Partagez les coûts de carburant.';
 
   @override
   String get ecoFriendly => 'Écologique';
 
   @override
-  String get ecoFriendlyDesc => 'Réduisez l\'empreinte carbone.';
+  String get ecoFriendlyDesc => 'Réduisez votre empreinte carbone.';
 
   @override
   String get community => 'Communauté';
 
   @override
-  String get communityDesc => 'Connectez-vous aux autres.';
+  String get communityDesc => 'Connectez-vous avec les autres.';
 
   @override
   String seatsLeft(int count) {
@@ -95,19 +95,19 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get totalPrice => 'Prix Total';
+  String get totalPrice => 'Prix total';
 
   @override
-  String get pickUp => 'Départ';
+  String get pickUp => 'Point de ramassage';
 
   @override
-  String get dropOff => 'Arrivée';
+  String get dropOff => 'Point de dépôt';
 
   @override
   String get accountSettings => 'Paramètres du compte';
 
   @override
-  String get contactUs => 'Contactez-nous';
+  String get contactUs => 'Nous contacter';
 
   @override
   String get logOut => 'Se déconnecter';
@@ -167,14 +167,14 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get cardPaymentComingSoon =>
-      'L\'intégration du paiement par carte arrive bientôt. Veuillez utiliser Mobile Money pour le moment.';
+      'L\'intégration du paiement par carte arrive bientôt.';
 
   @override
   String get bankTransfer => 'Virement bancaire';
 
   @override
   String get bankTransferDetails =>
-      'Les détails du virement bancaire seront envoyés à votre email.';
+      'Les détails du virement seront envoyés à votre email.';
 
   @override
   String get phoneNumber => 'Numéro de téléphone';
@@ -206,7 +206,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get fullNameHint => 'Entrez votre nom complet';
 
   @override
-  String get nationalIdLabel => 'Numéro de carte d\'identité nationale';
+  String get nationalIdLabel => 'Numéro de carte d\'identité';
 
   @override
   String get idHelperText => '16 chiffres';
@@ -266,8 +266,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get verificationSuccess => 'Vérification réussie!';
 
   @override
-  String get verificationSuccessMsg =>
-      'Votre identité a été vérifiée. Vous pouvez maintenant commencer votre trajet.';
+  String get verificationSuccessMsg => 'Votre identité a été vérifiée.';
 
   @override
   String get continueText => 'Continuer';
@@ -321,7 +320,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get planRouteDesc => 'Où commencez-vous et où allez-vous?';
 
   @override
-  String get vehicleDetailsDesc => 'Parlez de votre véhicule aux passagers.';
+  String get vehicleDetailsDesc => 'Parlez de votre véhicule.';
 
   @override
   String get tripInfoDesc => 'Définissez votre horaire et vos prix.';
@@ -346,7 +345,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get searchFeatureDesc =>
-      'Vous pourrez rechercher des trajets par lieu, date et prix ici.';
+      'Recherchez des trajets par lieu, date et prix.';
 
   @override
   String get emergencySOS => 'SOS d\'urgence';
@@ -355,25 +354,25 @@ class AppLocalizationsFr extends AppLocalizations {
   String get sosActive => 'Alerte SOS active';
 
   @override
-  String get pressAndHold => 'Appuyez et maintenez pendant 3 secondes';
+  String get pressAndHold => 'Appuyez et maintenez 3 secondes';
 
   @override
   String get sosActivated => 'SOS activé';
 
   @override
-  String get emergencyAlertSent => 'L\'alerte d\'urgence a été envoyée à:';
+  String get emergencyAlertSent => 'Alerte envoyée à:';
 
   @override
   String get emergencyContacts => 'Contacts d\'urgence';
 
   @override
-  String get ishareSupport => 'Équipe de support iShare';
+  String get ishareSupport => 'Support iShare';
 
   @override
-  String get currentTripDriver => 'Votre chauffeur/passager du trajet actuel';
+  String get currentTripDriver => 'Votre chauffeur actuel';
 
   @override
-  String get liveLocationShared => 'Votre position en direct est partagée.';
+  String get liveLocationShared => 'Votre position est partagée.';
 
   @override
   String get call112 => 'Appeler le 112';
@@ -382,11 +381,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get shareLocation => 'Partager la position';
 
   @override
-  String get shareLocationDesc =>
-      'Votre position actuelle sera partagée avec vos contacts sélectionnés par SMS.';
+  String get shareLocationDesc => 'Votre position sera partagée par SMS.';
 
   @override
-  String get locationSharedSuccess => 'Position partagée avec succès!';
+  String get locationSharedSuccess => 'Position partagée !';
 
   @override
   String get share => 'Partager';
@@ -395,10 +393,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get cancelTrip => 'Annuler le trajet';
 
   @override
-  String get tripCancelRequest => 'Demande d\'annulation de trajet';
+  String get tripCancelRequest => 'Demande d\'annulation';
 
   @override
-  String get police => 'Police nationale du Rwanda';
+  String get police => 'Police Nationale';
 
   @override
   String get ambulance => 'Ambulance';
@@ -413,46 +411,41 @@ class AppLocalizationsFr extends AppLocalizations {
   String get safetyTips => 'Conseils de sécurité';
 
   @override
-  String get verifyDriver => 'Vérifier les détails du chauffeur';
+  String get verifyDriver => 'Vérifier le chauffeur';
 
   @override
   String get verifyDriverDesc =>
-      'Vérifiez toujours le nom, la photo et les détails du véhicule du chauffeur avant d\'entrer.';
+      'Vérifiez toujours le nom et la photo du chauffeur.';
 
   @override
-  String get shareTrip => 'Partager les détails du trajet';
+  String get shareTrip => 'Partager le trajet';
 
   @override
-  String get shareTripDesc =>
-      'Partagez les détails de votre trajet avec vos amis ou votre famille avant de partir.';
+  String get shareTripDesc => 'Partagez les détails avec vos proches.';
 
   @override
   String get stayConnected => 'Restez connecté';
 
   @override
-  String get stayConnectedDesc =>
-      'Gardez votre téléphone chargé et accessible pendant le trajet.';
+  String get stayConnectedDesc => 'Gardez votre téléphone chargé.';
 
   @override
-  String get checkRatings => 'Vérifier les évaluations';
+  String get checkRatings => 'Vérifier les avis';
 
   @override
-  String get checkRatingsDesc =>
-      'Consultez les évaluations et commentaires des autres passagers sur le chauffeur.';
+  String get checkRatingsDesc => 'Consultez les notes du chauffeur.';
 
   @override
-  String get reportIssues => 'Signaler des problèmes';
+  String get reportIssues => 'Signaler un problème';
 
   @override
-  String get reportIssuesDesc =>
-      'Signalez immédiatement tout comportement suspect ou préoccupation de sécurité.';
+  String get reportIssuesDesc => 'Signalez tout comportement suspect.';
 
   @override
   String get safetyMatters => 'Votre sécurité compte';
 
   @override
-  String get safetyCommitment =>
-      'iShare s\'engage à fournir une expérience de covoiturage sûre et sécurisée. Tous les chauffeurs sont vérifiés.';
+  String get safetyCommitment => 'iShare s\'engage pour votre sécurité.';
 
   @override
   String get call => 'Appeler';
@@ -467,145 +460,131 @@ class AppLocalizationsFr extends AppLocalizations {
   String get appTagline => 'Partagez le trajet, partagez les coûts';
 
   @override
-  String get appDescriptionShort =>
-      'Plateforme intelligente de covoiturage et de partage des coûts';
+  String get appDescriptionShort => 'Plateforme de covoiturage';
 
   @override
   String get visionTitle => '🎯 Vision';
 
   @override
-  String get visionText =>
-      'Révolutionner le transport au Rwanda et en Afrique de l\'Est en créant un réseau de covoiturage fiable, écologique et abordable.';
+  String get visionText => 'Révolutionner le transport en Afrique de l\'Est.';
 
   @override
   String get missionTitle => '🚀 Mission';
 
   @override
   String get missionText =>
-      'Connecter les propriétaires de voitures avec des sièges vides aux passagers allant dans la même direction, réduisant les coûts de transport, la congestion routière et les émissions de carbone.';
+      'Connecter conducteurs et passagers pour réduire les coûts.';
 
   @override
   String get problemTitle => '❓ Le problème';
 
   @override
-  String get problemText =>
-      'Les prix du carburant augmentent, la congestion routière s\'intensifie et les transports publics peuvent être peu pratiques. De nombreuses voitures privées voyagent avec 3-4 sièges vides.';
+  String get problemText => 'Coûts élevés, congestion et pollution.';
 
   @override
   String get solutionTitle => '✅ Notre solution';
 
   @override
-  String get solutionText =>
-      'iShare connecte les chauffeurs et les passagers. Les chauffeurs gagnent de l\'argent pour compenser les coûts de carburant, et les passagers voyagent confortablement à un prix inférieur.';
+  String get solutionText => 'Covoiturage fiable et abordable.';
 
   @override
   String get howItWorks => '📱 Comment ça marche';
 
   @override
-  String get step1Title => 'Le chauffeur publie le trajet';
+  String get step1Title => 'Le chauffeur publie';
 
   @override
-  String get step1Desc =>
-      'Un chauffeur se rendant à une destination liste les détails de son trajet (heure, sièges, prix).';
+  String get step1Desc => 'Détails du trajet (heure, prix).';
 
   @override
   String get step2Title => 'Le passager réserve';
 
   @override
-  String get step2Desc =>
-      'Les passagers recherchent des trajets et réservent une place instantanément.';
+  String get step2Desc => 'Recherche et réservation instantanée.';
 
   @override
-  String get step3Title => 'Voyager ensemble';
+  String get step3Title => 'Voyagez ensemble';
 
   @override
-  String get step3Desc =>
-      'Ils se rencontrent au point de ramassage et profitent du voyage.';
+  String get step3Desc => 'Rencontre et trajet.';
 
   @override
   String get step4Title => 'Noter et payer';
 
   @override
-  String get step4Desc =>
-      'Le paiement est traité et les deux parties se notent mutuellement.';
+  String get step4Desc => 'Paiement et évaluation.';
 
   @override
-  String get keyFeatures => '⚡ Fonctionnalités clés';
+  String get keyFeatures => '⚡ Fonctionnalités';
 
   @override
   String get feat1Title => 'Utilisateurs vérifiés';
 
   @override
-  String get feat1Desc =>
-      'Vérification d\'identité et de téléphone pour la sécurité.';
+  String get feat1Desc => 'Identité vérifiée.';
 
   @override
   String get feat2Title => 'Suivi en temps réel';
 
   @override
-  String get feat2Desc => 'Partagez votre position en direct pour la sécurité.';
+  String get feat2Desc => 'Partage de position.';
 
   @override
   String get feat3Title => 'Recherche intelligente';
 
   @override
-  String get feat3Desc => 'Trouvez des trajets par ville, date ou prix.';
+  String get feat3Desc => 'Par ville, date ou prix.';
 
   @override
   String get feat4Title => 'Paiements sécurisés';
 
   @override
-  String get feat4Desc => 'Intégration Mobile Money et carte.';
+  String get feat4Desc => 'Mobile Money & Carte.';
 
   @override
-  String get feat5Title => 'Évaluations et avis';
+  String get feat5Title => 'Avis';
 
   @override
-  String get feat5Desc =>
-      'Construisez la confiance avec les commentaires de la communauté.';
+  String get feat5Desc => 'Confiance communautaire.';
 
   @override
-  String get feat6Title => 'SOS et sécurité';
+  String get feat6Title => 'SOS';
 
   @override
-  String get feat6Desc => 'Alertes d\'urgence et numérotation rapide.';
+  String get feat6Desc => 'Alertes d\'urgence.';
 
   @override
-  String get ourImpact => '🌍 Notre impact';
+  String get ourImpact => '🌍 Impact';
 
   @override
-  String get impact1 =>
-      'Réduit la congestion routière en optimisant les sièges vides.';
+  String get impact1 => 'Réduit la congestion.';
 
   @override
-  String get impact2 => 'Diminue l\'empreinte carbone (Mobilité verte).';
+  String get impact2 => 'Réduit l\'empreinte carbone.';
 
   @override
-  String get impact3 =>
-      'Économise de l\'argent pour les chauffeurs et les passagers.';
+  String get impact3 => 'Économise de l\'argent.';
 
   @override
-  String get vision2050Title => '🇷🇼 Alignement avec Vision 2050 du Rwanda';
+  String get vision2050Title => '🇷🇼 Vision 2050';
 
   @override
-  String get vision2050Intro =>
-      'iShare contribue directement aux objectifs de Vision 2050 du Rwanda:';
+  String get vision2050Intro => 'Contribution à la Vision 2050 du Rwanda:';
 
   @override
-  String get visionPoint1 => 'Villes intelligentes et mobilité verte.';
+  String get visionPoint1 => 'Villes intelligentes.';
 
   @override
-  String get visionPoint2 => 'Prestation de services numériques.';
+  String get visionPoint2 => 'Services numériques.';
 
   @override
-  String get visionPoint3 => 'Innovation et entrepreneuriat.';
+  String get visionPoint3 => 'Innovation.';
 
   @override
   String get longTermVision => '🚀 Vision à long terme';
 
   @override
-  String get longTermText =>
-      'Nous visons à nous étendre dans toute la Communauté d\'Afrique de l\'Est (CAE), rendant les voyages transfrontaliers fluides et abordables.';
+  String get longTermText => 'Expansion dans la CAE.';
 
   @override
   String get targetCountries => 'Pays cibles:';
@@ -632,24 +611,22 @@ class AppLocalizationsFr extends AppLocalizations {
   String get copyrightOwner => 'iShare Rwanda Ltd';
 
   @override
-  String get ipNotice =>
-      'Tous droits réservés. Ce logiciel est la propriété intellectuelle d\'iShare Rwanda. La reproduction ou distribution non autorisée est strictement interdite.';
+  String get ipNotice => 'Tous droits réservés.';
 
   @override
-  String get hereToHelp => 'Nous sommes là pour vous aider!';
+  String get hereToHelp => 'Besoin d\'aide ?';
 
   @override
-  String get reachOutMsg =>
-      'Contactez-nous à tout moment, nous serions ravis de vous entendre';
+  String get reachOutMsg => 'Contactez-nous à tout moment.';
 
   @override
-  String get findUsHere => 'Trouvez-nous ici';
+  String get findUsHere => 'Trouvez-nous';
 
   @override
   String get directions => 'Directions';
 
   @override
-  String get getInTouch => 'Entrer en contact';
+  String get getInTouch => 'Contact';
 
   @override
   String get address => 'Adresse';
@@ -667,7 +644,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get officeHours => 'Heures de bureau';
 
   @override
-  String get monFri => 'Lundi - Vendredi';
+  String get monFri => 'Lun - Ven';
 
   @override
   String get saturday => 'Samedi';
@@ -679,59 +656,56 @@ class AppLocalizationsFr extends AppLocalizations {
   String get closed => 'Fermé';
 
   @override
-  String get connectWithUs => 'Connectez-vous avec nous';
+  String get connectWithUs => 'Suivez-nous';
 
   @override
-  String get haveQuestions => 'Vous avez des questions?';
+  String get haveQuestions => 'Des questions ?';
 
   @override
-  String get sendMessageDesc =>
-      'Envoyez-nous un message et nous vous répondrons dans les 24 heures';
+  String get sendMessageDesc => 'Envoyez un message, réponse sous 24h.';
 
   @override
-  String get sendMessage => 'Envoyer un message';
+  String get sendMessage => 'Envoyer';
 
   @override
-  String get driverVerificationTitle => 'Vérification du chauffeur';
+  String get driverVerificationTitle => 'Vérification Chauffeur';
 
   @override
-  String get whyVerification => 'Pourquoi la vérification?';
+  String get whyVerification => 'Pourquoi ?';
 
   @override
-  String get verificationDesc =>
-      'La vérification assure la sécurité et la confiance pour tous les utilisateurs. Vos informations sont gardées sécurisées et privées.';
+  String get verificationDesc => 'Pour la sécurité de tous.';
 
   @override
-  String get verificationSubmitted => 'Vérification soumise!';
+  String get verificationSubmitted => 'Envoyé !';
 
   @override
   String get verificationReviewMsg =>
-      'Votre demande de vérification a été soumise. Nous examinerons vos informations et vous informerons dans les 24-48 heures.';
+      'Nous examinerons votre demande sous 24-48h.';
 
   @override
   String get myActivity => 'Mon activité';
 
   @override
-  String get bookedRides => 'Trajets réservés';
+  String get bookedRides => 'Réservations';
 
   @override
-  String get postedRides => 'Trajets publiés';
+  String get postedRides => 'Publications';
 
   @override
-  String get postRide => 'Publier un trajet';
+  String get postRide => 'Publier';
 
   @override
-  String get noBookedRides => 'Aucun trajet réservé pour le moment';
+  String get noBookedRides => 'Aucune réservation';
 
   @override
-  String get noBookedRidesDesc => 'Vos prochains trajets apparaîtront ici.';
+  String get noBookedRidesDesc => 'Vos trajets apparaîtront ici.';
 
   @override
-  String get noPostedRides => 'Aucun trajet publié';
+  String get noPostedRides => 'Aucune publication';
 
   @override
-  String get noPostedRidesDesc =>
-      'Gagnez de l\'argent en publiant un trajet aujourd\'hui.';
+  String get noPostedRidesDesc => 'Publiez un trajet pour commencer.';
 
   @override
   String get seats => 'Sièges';
@@ -743,10 +717,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get completed => 'Terminé';
 
   @override
-  String get viewPassengers => 'Voir les passagers';
+  String get viewPassengers => 'Passagers';
 
   @override
-  String get submitVerification => 'Soumettre la vérification';
+  String get submitVerification => 'Soumettre';
 
   @override
   String get myTripsTitle => 'Mes Trajets';
@@ -758,10 +732,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get offeredTab => 'Offert';
 
   @override
-  String get noBookingsMessage => 'Aucun trajet réservé pour le moment.';
+  String get noBookingsMessage => 'Aucun trajet réservé.';
 
   @override
-  String get noOffersMessage => 'Vous n\'avez publié aucun trajet.';
+  String get noOffersMessage => 'Aucun trajet publié.';
 
   @override
   String get welcomeTitle => 'Bienvenue sur iShare';
@@ -782,34 +756,34 @@ class AppLocalizationsFr extends AppLocalizations {
   String get today => 'Aujourd\'hui';
 
   @override
+  String get tomorrow => 'Demain';
+
+  @override
   String get noRidesAvailable => 'Aucun trajet disponible';
 
   @override
-  String get onboardTitle1 => 'Voyagez en\nToute Confiance';
+  String get onboardTitle1 => 'Voyagez en Confiance';
 
   @override
-  String get onboardDesc1 =>
-      'Chauffeurs vérifiés, suivi en temps réel et assistance 24/7.';
+  String get onboardDesc1 => 'Chauffeurs vérifiés et suivi.';
 
   @override
-  String get onboardTitle2 => 'Partagez les Frais,\nPartagez des Sourires';
+  String get onboardTitle2 => 'Partagez les Frais';
 
   @override
-  String get onboardDesc2 =>
-      'Connectez-vous avec des gens sur votre route et économisez.';
+  String get onboardDesc2 => 'Économisez sur vos trajets.';
 
   @override
-  String get onboardTitle3 => 'Transport Rapide\net Fiable';
+  String get onboardTitle3 => 'Rapide et Fiable';
 
   @override
-  String get onboardDesc3 =>
-      'Trouvez un trajet en quelques minutes. Fini l\'attente.';
+  String get onboardDesc3 => 'Trouvez un trajet en quelques minutes.';
 
   @override
   String get getStarted => 'Commencer';
 
   @override
-  String get alreadyHaveAccount => 'Vous avez déjà un compte ?';
+  String get alreadyHaveAccount => 'Déjà un compte ?';
 
   @override
   String get login => 'Connexion';
@@ -827,29 +801,28 @@ class AppLocalizationsFr extends AppLocalizations {
   String get orContinue => 'Ou continuer avec';
 
   @override
-  String get newToApp => 'Nouveau sur iShare ?';
+  String get newToApp => 'Nouveau ?';
 
   @override
   String get register => 'S\'inscrire';
 
   @override
-  String get fillAllFields => 'Veuillez remplir tous les champs.';
+  String get fillAllFields => 'Remplissez tout.';
 
   @override
-  String get incorrectCredentials =>
-      'Identifiants incorrects. Veuillez réessayer.';
+  String get incorrectCredentials => 'Erreur d\'identification.';
 
   @override
-  String get welcomeBack => 'Bonjour,\nBon retour !';
+  String get welcomeBack => 'Bon retour !';
 
   @override
-  String get loginSecurely => 'Connectez-vous en toute sécurité.';
+  String get loginSecurely => 'Connexion sécurisée.';
 
   @override
   String get createAccount => 'Créer un compte';
 
   @override
-  String get joinIshare => 'Rejoindre iShare';
+  String get joinIshare => 'Rejoindre';
 
   @override
   String get firstName => 'Prénom';
@@ -858,27 +831,25 @@ class AppLocalizationsFr extends AppLocalizations {
   String get lastNameOptional => 'Nom (Optionnel)';
 
   @override
-  String get emailAddress => 'Adresse E-mail';
+  String get emailAddress => 'Email';
 
   @override
   String get registerAction => 'S\'INSCRIRE';
 
   @override
-  String get fillAllRequired =>
-      'Veuillez remplir tous les champs obligatoires.';
+  String get fillAllRequired => 'Champs obligatoires requis.';
 
   @override
-  String get registrationSuccess =>
-      'Inscription réussie ! Veuillez vous connecter.';
+  String get registrationSuccess => 'Succès ! Connectez-vous.';
 
   @override
-  String get registrationFailed => 'Échec de l\'inscription : ';
+  String get registrationFailed => 'Échec : ';
 
   @override
   String get myTicket => 'Mon Billet';
 
   @override
-  String get tripUnavailable => 'Détails du trajet indisponibles';
+  String get tripUnavailable => 'Indisponible';
 
   @override
   String get bookingId => 'ID Réservation';
@@ -887,26 +858,25 @@ class AppLocalizationsFr extends AppLocalizations {
   String get dateLabel => 'Date';
 
   @override
-  String get bookedStatus => 'Réservé(s)';
+  String get bookedStatus => 'Réservé';
 
   @override
-  String get driverLabel => 'Conducteur';
+  String get driverLabel => 'Chauffeur';
 
   @override
-  String get ticketInstruction =>
-      'Présentez ce billet au chauffeur lors de l\'embarquement.';
+  String get ticketInstruction => 'Montrez ce billet au chauffeur.';
 
   @override
-  String get tripDetails => 'Détails du Trajet';
+  String get tripDetails => 'Détails';
 
   @override
-  String get estimatedEarnings => 'Gains Estimés';
+  String get estimatedEarnings => 'Gains est.';
 
   @override
   String get totalRevenue => 'Revenu Total';
 
   @override
-  String get passengerManifest => 'Liste des Passagers';
+  String get passengerManifest => 'Passagers';
 
   @override
   String bookedCount(int count) {
@@ -914,36 +884,34 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get noPassengers => 'Aucun passager pour le moment.';
+  String get noPassengers => 'Aucun passager.';
 
   @override
   String get paidStatus => 'PAYÉ';
 
   @override
-  String get cancelTripTitle => 'Annuler le trajet ?';
+  String get cancelTripTitle => 'Annuler ?';
 
   @override
-  String get cancelTripMessage =>
-      'Cela annulera le trajet pour tous les passagers et les notifiera. Êtes-vous sûr ?';
+  String get cancelTripMessage => 'Cela annulera le trajet pour tous.';
 
   @override
-  String get keepTrip => 'Garder le trajet';
+  String get keepTrip => 'Non, garder';
 
   @override
-  String get yesCancel => 'Oui, Annuler';
+  String get yesCancel => 'Oui, annuler';
 
   @override
-  String get callingPassenger => 'Appel du passager...';
+  String get callingPassenger => 'Appel...';
 
   @override
-  String get errorLoadingBookings =>
-      'Erreur lors du chargement des réservations : ';
+  String get errorLoadingBookings => 'Erreur chargement : ';
 
   @override
   String get aboutSection => 'À propos';
 
   @override
-  String get noBio => 'Aucune biographie fournie.';
+  String get noBio => 'Pas de bio.';
 
   @override
   String joinedDate(String date) {
@@ -954,16 +922,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get vehicleSection => 'Véhicule';
 
   @override
-  String get noCarPhoto => 'Aucune photo de voiture';
+  String get noCarPhoto => 'Pas de photo';
 
   @override
-  String get unknownModel => 'Modèle inconnu';
+  String get unknownModel => 'Inconnu';
 
   @override
-  String get noPlateInfo => 'Aucune plaque';
+  String get noPlateInfo => 'Pas de plaque';
 
   @override
-  String get errorLoadProfile => 'Impossible de charger le profil';
+  String get errorLoadProfile => 'Erreur profil';
 
   @override
   String get mapView => 'Carte';
@@ -972,32 +940,31 @@ class AppLocalizationsFr extends AppLocalizations {
   String get listView => 'Liste';
 
   @override
-  String get shareRide => 'Partager le trajet';
+  String get shareRide => 'Partager';
 
   @override
   String shareMessage(String driver, String car, String from, String to) {
-    return 'Salut ! Je suis en route avec ISHARE.\n\n🚗 Chauffeur : $driver\n🚙 Voiture : $car\n📍 Trajet : $from ➝ $to';
+    return 'Je suis en route avec iShare : $from vers $to';
   }
 
   @override
-  String get paymentAlreadyPaidTitle => 'Paiement déjà effectué';
+  String get paymentAlreadyPaidTitle => 'Déjà payé';
 
   @override
-  String get paymentAlreadyPaidMsg =>
-      'Cette réservation a déjà été payée. Vous pouvez la voir dans vos trajets.';
+  String get paymentAlreadyPaidMsg => 'Réservation déjà payée.';
 
   @override
-  String get viewTrips => 'Voir les trajets';
+  String get viewTrips => 'Voir trajets';
 
   @override
-  String get approvePayment => 'Approuver le paiement';
+  String get approvePayment => 'Approuver';
 
   @override
-  String get checkPhoneTitle => 'Veuillez vérifier votre téléphone.';
+  String get checkPhoneTitle => 'Vérifiez votre téléphone';
 
   @override
   String sentPromptTo(String phone) {
-    return 'Une demande a été envoyée au $phone. Entrez votre code PIN pour approuver.';
+    return 'Envoyé au $phone.';
   }
 
   @override
@@ -1013,65 +980,63 @@ class AppLocalizationsFr extends AppLocalizations {
   String get cardSubtitle => 'Visa, Mastercard';
 
   @override
-  String get bankTransferSubtitle => 'Virement direct';
+  String get bankTransferSubtitle => 'Virement';
 
   @override
   String get phoneHint => 'ex: 0788123456';
 
   @override
-  String get enterPhoneError => 'Veuillez entrer le numéro de téléphone';
+  String get enterPhoneError => 'Entrez le numéro';
 
   @override
-  String get invalidPhoneError => 'Numéro de téléphone invalide';
+  String get invalidPhoneError => 'Numéro invalide';
 
   @override
-  String get rideRequests => 'Demandes de trajet';
+  String get rideRequests => 'Demandes';
 
   @override
-  String get editProfile => 'Modifier le profil';
+  String get editProfile => 'Modifier profil';
 
   @override
-  String get paymentPhoneNumber => 'Numéro de téléphone pour paiement';
+  String get paymentPhoneNumber => 'Numéro de paiement';
 
   @override
-  String get paymentInstructions =>
-      'Veuillez envoyer le montant de l\'abonnement à ce numéro de téléphone via Mobile Money (MTN/Airtel). Après le paiement, votre abonnement sera activé automatiquement.';
+  String get paymentInstructions => 'Envoyez le montant via Mobile Money.';
 
   @override
   String get subscriptionTitle => 'Abonnement';
 
   @override
-  String get subscriptionStatus => 'Statut de l\'abonnement';
+  String get subscriptionStatus => 'Statut';
 
   @override
-  String get trialPeriod => 'Période d\'essai';
+  String get trialPeriod => 'Essai';
 
   @override
-  String get activeSubscription => 'Abonnement actif';
+  String get activeSubscription => 'Actif';
 
   @override
-  String get subscriptionExpired => 'Abonnement expiré';
+  String get subscriptionExpired => 'Expiré';
 
   @override
   String daysRemaining(int days) {
-    return '$days jours restants';
+    return '$days jours';
   }
 
   @override
-  String get pleaseRenewSubscription =>
-      'Veuillez renouveler pour continuer à utiliser iShare';
+  String get pleaseRenewSubscription => 'Veuillez renouveler.';
 
   @override
-  String get subscriptionPlans => 'Plans d\'abonnement';
+  String get subscriptionPlans => 'Plans';
 
   @override
-  String get perMonth => 'par mois';
+  String get perMonth => '/ mois';
 
   @override
-  String get renewSubscription => 'Renouveler l\'abonnement';
+  String get renewSubscription => 'Renouveler';
 
   @override
-  String get subscribeNow => 'S\'abonner maintenant';
+  String get subscribeNow => 'S\'abonner';
 
   @override
   String payAmount(String amount) {
@@ -1080,12 +1045,124 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String trialEndsIn(int days) {
-    return 'Votre période d\'essai se termine dans $days jours. Abonnez-vous maintenant pour continuer à utiliser iShare après l\'essai.';
+    return 'Essai finit dans $days jours.';
   }
 
   @override
-  String get paymentViaMobileMoney => 'Paiement via Mobile Money (MTN/Airtel)';
+  String get paymentViaMobileMoney => 'Paiement Mobile Money';
 
   @override
   String get passengerLabel => 'Passager';
+
+  @override
+  String get loginRequired => 'Connexion requise';
+
+  @override
+  String get loginToBookMessage => 'Veuillez vous connecter pour réserver.';
+
+  @override
+  String get bookingSuccessMessage => 'Réservation réussie !';
+
+  @override
+  String get requestFailed => 'Échec de la demande.';
+
+  @override
+  String get alreadyBookedError => 'Déjà réservé.';
+
+  @override
+  String get requestBooking => 'Réserver';
+
+  @override
+  String get bannerTitle => 'Connectez-vous. Partagez.';
+
+  @override
+  String get bannerSubtitle => 'Voyagez moins cher.';
+
+  @override
+  String get premiumClass => 'Premium';
+
+  @override
+  String get premiumSubtitle => 'Luxe & Vitesse';
+
+  @override
+  String get standardComfort => 'Standard';
+
+  @override
+  String get standardSubtitle => 'Fiable';
+
+  @override
+  String get economySaver => 'Éco';
+
+  @override
+  String get economySubtitle => 'Meilleur prix';
+
+  @override
+  String get noRidesFound => 'Aucun trajet';
+
+  @override
+  String get offerRideInstead => 'Proposer un trajet ?';
+
+  @override
+  String get soldOut => 'COMPLET';
+
+  @override
+  String get oneSeatLeft => '1 place !';
+
+  @override
+  String seatsCount(int count) {
+    return '$count places';
+  }
+
+  @override
+  String get standardCar => 'Voiture';
+
+  @override
+  String get amenityAC => 'Clim';
+
+  @override
+  String get amenityLuggage => 'Bagages';
+
+  @override
+  String get amenityNoSmoking => 'Non-fumeur';
+
+  @override
+  String get amenityMusic => 'Musique';
+
+  @override
+  String get rideRequestsTitle => 'Demandes de Trajet';
+
+  @override
+  String get noPendingRequests => 'Aucune demande en attente';
+
+  @override
+  String get caughtUpMessage => 'Tout est à jour ! Revenez plus tard.';
+
+  @override
+  String get refresh => 'Actualiser';
+
+  @override
+  String get unableToLoadRequests => 'Impossible de charger les demandes';
+
+  @override
+  String get tryAgain => 'Réessayer';
+
+  @override
+  String get requestApproved => 'Demande Approuvée';
+
+  @override
+  String get requestRejected => 'Demande Rejetée';
+
+  @override
+  String requestingSeats(int count) {
+    return 'Demande $count place(s)';
+  }
+
+  @override
+  String get routeInfoUnavailable => 'Info trajet indisponible';
+
+  @override
+  String get reject => 'Rejeter';
+
+  @override
+  String get acceptRequest => 'Accepter';
 }

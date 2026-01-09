@@ -11,7 +11,10 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.db.models import Count, Q 
-from django.core.exceptions import ValidationError # ✅ Added for logic checks
+from django.core.exceptions import ValidationError 
+# ✅ REQUIRED FOR EMAILS
+from django.core.mail import send_mail
+from django.conf import settings
 
 from .models import (
     UserProfile, Trip, Booking, Rating, PaymentTransaction,
@@ -23,7 +26,8 @@ from .serializers import (
     PaymentSerializer, DriverVerificationSerializer, SubscriptionSerializer
 )
 from .utils import PaypackPayment 
-from .emails import send_booking_confirmation, send_welcome_email, send_otp_email
+# Only import what we use from external files. We handle welcome email directly here now.
+from .emails import send_booking_confirmation, send_otp_email 
 
 User = get_user_model()
 
@@ -47,11 +51,48 @@ class RegisterViewSet(viewsets.ViewSet):
                 trial_ends_at=timezone.now() + timedelta(days=30)
             )
             
-            # ✅ Send Welcome Email
-            send_welcome_email(user)
+            # =========================================================
+            # ✅ SEND WELCOME EMAIL (Direct Logic)
+            # =========================================================
+            try:
+                user_role = user.role.capitalize() if hasattr(user, 'role') and user.role else "Member"
+                subject = f"Welcome to iShare, {user.username}!"
+                
+                # Customize message based on role
+                action_text = "Post your first trip!" if user_role == "Driver" else "Book your first ride!"
+                
+                message = f"""
+Hello {user.username},
+
+Welcome to iShare! We are thrilled to have you join our community as a {user_role}.
+
+Your account has been successfully created.
+Username: {user.username}
+Role: {user_role}
+
+Next Steps:
+1. Log in to the app.
+2. Complete your profile.
+3. {action_text}
+
+If you have any questions, feel free to reply to this email.
+
+Safe travels,
+The iShare Team
+"""
+                send_mail(
+                    subject,
+                    message,
+                    settings.EMAIL_HOST_USER,
+                    [user.email],
+                    fail_silently=False,
+                )
+                print(f"✅ Welcome email sent to {user.email}")
+            except Exception as e:
+                print(f"❌ Failed to send welcome email: {str(e)}")
+            # =========================================================
             
             # ✅ Get profile with vehicle_photo included
-            from .serializers import UserProfileSerializer
             profile = user.profile
             profile_data = UserProfileSerializer(profile, context={'request': request}).data
             
@@ -59,7 +100,7 @@ class RegisterViewSet(viewsets.ViewSet):
                 {
                     "message": "Registration successful.", 
                     "user": UserSerializer(user).data,
-                    "profile": profile_data  # ✅ Include profile with vehicle_photo
+                    "profile": profile_data 
                 },
                 status=status.HTTP_201_CREATED
             )
@@ -81,7 +122,21 @@ class RegisterView(generics.CreateAPIView):
             trial_ends_at=timezone.now() + timedelta(days=30)
         )
         
-        send_welcome_email(user)
+        # ✅ Send Welcome Email (Backup View)
+        try:
+            user_role = user.role.capitalize() if hasattr(user, 'role') and user.role else "Member"
+            subject = f"Welcome to iShare, {user.username}!"
+            message = f"Hello {user.username},\n\nWelcome to iShare! Your account has been created.\n\nSafe travels,\nThe iShare Team"
+            
+            send_mail(
+                subject,
+                message,
+                settings.EMAIL_HOST_USER,
+                [user.email],
+                fail_silently=False,
+            )
+        except Exception as e:
+            print(f"❌ Failed to send welcome email in RegisterView: {str(e)}")
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     def post(self, request, *args, **kwargs):

@@ -775,6 +775,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get today => 'Today';
 
   @override
+  String get tomorrow => 'Tomorrow';
+
+  @override
   String get noRidesAvailable => 'No rides available';
 
   @override
@@ -1074,4 +1077,118 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get passengerLabel => 'Passenger';
+
+  @override
+  String get loginRequired => 'Login Required';
+
+  @override
+  String get loginToBookMessage => 'Please login to book a ride.';
+
+  @override
+  String get bookingSuccessMessage =>
+      'Booking Successful! \n\nThe seat availability has been updated.';
+
+  @override
+  String get requestFailed => 'Request failed. Please try again.';
+
+  @override
+  String get alreadyBookedError => 'You have already booked this ride.';
+
+  @override
+  String get requestBooking => 'Request Booking';
+
+  @override
+  String get bannerTitle => 'Connect. Split Costs.\nEnjoy the Ride.';
+
+  @override
+  String get bannerSubtitle =>
+      'Find travelers heading your way and travel comfortably for less.';
+
+  @override
+  String get premiumClass => 'Premium Class';
+
+  @override
+  String get premiumSubtitle => 'Luxury & Speed';
+
+  @override
+  String get standardComfort => 'Standard Comfort';
+
+  @override
+  String get standardSubtitle => 'Reliable daily rides';
+
+  @override
+  String get economySaver => 'Economy Saver';
+
+  @override
+  String get economySubtitle => 'Best prices for you';
+
+  @override
+  String get noRidesFound => 'No rides found';
+
+  @override
+  String get offerRideInstead => 'Offer a Ride instead?';
+
+  @override
+  String get soldOut => 'SOLD OUT';
+
+  @override
+  String get oneSeatLeft => 'Only 1 left!';
+
+  @override
+  String seatsCount(int count) {
+    return '$count seats';
+  }
+
+  @override
+  String get standardCar => 'Standard Car';
+
+  @override
+  String get amenityAC => 'AC';
+
+  @override
+  String get amenityLuggage => 'Luggage';
+
+  @override
+  String get amenityNoSmoking => 'No Smoking';
+
+  @override
+  String get amenityMusic => 'Music';
+
+  @override
+  String get rideRequestsTitle => 'Ride Requests';
+
+  @override
+  String get noPendingRequests => 'No pending requests';
+
+  @override
+  String get caughtUpMessage => 'You\'re all caught up! Check back later.';
+
+  @override
+  String get refresh => 'Refresh';
+
+  @override
+  String get unableToLoadRequests => 'Unable to load requests';
+
+  @override
+  String get tryAgain => 'Try Again';
+
+  @override
+  String get requestApproved => 'Request Approved';
+
+  @override
+  String get requestRejected => 'Request Rejected';
+
+  @override
+  String requestingSeats(int count) {
+    return 'Requesting $count Seat(s)';
+  }
+
+  @override
+  String get routeInfoUnavailable => 'Route info unavailable';
+
+  @override
+  String get reject => 'Reject';
+
+  @override
+  String get acceptRequest => 'Accept Request';
 }

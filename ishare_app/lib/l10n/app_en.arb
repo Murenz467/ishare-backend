@@ -251,6 +251,7 @@
   "statTrips": "Trips",
   "statRating": "Rating",
   "today": "Today",
+  "tomorrow": "Tomorrow",
   "noRidesAvailable": "No rides available",
   "onboardTitle1": "Travel with\nConfidence",
   "onboardDesc1": "Verified drivers, real-time tracking, and 24/7 support.",
@@ -403,5 +404,55 @@
   },
   "paymentViaMobileMoney": "Payment via Mobile Money (MTN/Airtel)",
   "passengerLabel": "Passenger",
-  "driverLabel": "Driver"
+  "driverLabel": "Driver",
+  "loginRequired": "Login Required",
+  "loginToBookMessage": "Please login to book a ride.",
+  "bookingSuccessMessage": "Booking Successful! \n\nThe seat availability has been updated.",
+  "requestFailed": "Request failed. Please try again.",
+  "alreadyBookedError": "You have already booked this ride.",
+  "requestBooking": "Request Booking",
+  "bannerTitle": "Connect. Split Costs.\nEnjoy the Ride.",
+  "bannerSubtitle": "Find travelers heading your way and travel comfortably for less.",
+  "premiumClass": "Premium Class",
+  "premiumSubtitle": "Luxury & Speed",
+  "standardComfort": "Standard Comfort",
+  "standardSubtitle": "Reliable daily rides",
+  "economySaver": "Economy Saver",
+  "economySubtitle": "Best prices for you",
+  "noRidesFound": "No rides found",
+  "offerRideInstead": "Offer a Ride instead?",
+  "soldOut": "SOLD OUT",
+  "oneSeatLeft": "Only 1 left!",
+  "seatsCount": "{count} seats",
+  "@seatsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "standardCar": "Standard Car",
+  "amenityAC": "AC",
+  "amenityLuggage": "Luggage",
+  "amenityNoSmoking": "No Smoking",
+  "amenityMusic": "Music",
+  "rideRequestsTitle": "Ride Requests",
+  "noPendingRequests": "No pending requests",
+  "caughtUpMessage": "You're all caught up! Check back later.",
+  "refresh": "Refresh",
+  "unableToLoadRequests": "Unable to load requests",
+  "tryAgain": "Try Again",
+  "requestApproved": "Request Approved",
+  "requestRejected": "Request Rejected",
+  "requestingSeats": "Requesting {count} Seat(s)",
+  "@requestingSeats": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "routeInfoUnavailable": "Route info unavailable",
+  "reject": "Reject",
+  "acceptRequest": "Accept Request"
 }
