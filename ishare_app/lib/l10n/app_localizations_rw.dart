@@ -1151,7 +1151,7 @@ class AppLocalizationsRw extends AppLocalizations {
   String get refresh => 'Vugurura';
 
   @override
-  String get unableToLoadRequests => 'Kudana ubusabe byanze';
+  String get unableToLoadRequests => 'Kubona ubusabe byanze';
 
   @override
   String get tryAgain => 'Gerageza Nanone';

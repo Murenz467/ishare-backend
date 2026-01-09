@@ -254,9 +254,12 @@ SIMPLE_JWT = {
 # 📧 EMAIL CONFIGURATION
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+
+# 🔄 CHANGE: Switch from TLS (587) to SSL (465)
+EMAIL_PORT = 465
+EMAIL_USE_TLS = False  # Turn off TLS
+EMAIL_USE_SSL = True   # Turn on SSL
+
 EMAIL_HOST_USER = 'murenzicharles24@gmail.com' 
-# ✅ SECURITY UPDATE: Use Environment Variable
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD') 
 DEFAULT_FROM_EMAIL = 'ISHARE Support <murenzicharles24@gmail.com>'
