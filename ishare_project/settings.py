@@ -59,9 +59,11 @@ INSTALLED_APPS = [
     
     # Your apps
     'api',
+    'subscriptions',
     # 'trips',    # Ensure these are added if they are separate apps
     # 'ratings',
     # 'profiles',
+    
 ]
 
 MIDDLEWARE = [

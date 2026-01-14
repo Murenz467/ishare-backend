@@ -13,7 +13,7 @@ import '../../constants/app_theme.dart';
 // ✅ SCREENS IMPORTS
 import '../auth/login_screen.dart';
 import 'driververification_screen.dart';
-import 'subscription_screen.dart';
+import 'package:ishare_app/features/subscription/subscription_screen.dart';
 
 class CreateTripScreen extends ConsumerStatefulWidget {
   const CreateTripScreen({super.key});

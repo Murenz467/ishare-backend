@@ -16,7 +16,7 @@ enum PaymentMethod {
 
 class PaymentScreen extends ConsumerStatefulWidget {
   final double totalAmount;
-  final int bookingId;
+  final int bookingId; // If -1, this is a SUBSCRIPTION payment.
 
   const PaymentScreen({
     super.key, 
@@ -107,38 +107,62 @@ class _PaymentScreenState extends ConsumerState<PaymentScreen> {
     }
   }
 
-  // --- 1. MOBILE MONEY LOGIC (MANUAL PAY TO DRIVER) ---
+  // --- 1. MOBILE MONEY LOGIC (SMART DUAL MODE) ---
   Future<void> _processMobileMoneyPayment(AppLocalizations l10n) async {
     setState(() => _isProcessing = true);
     
     final apiService = ref.read(apiServiceProvider);
-
+    String targetPhone = "";
+    String titleText = "";
+    String subtitleText = "";
+    
     try {
-      // 1. Fetch Booking Details to find Driver's Phone Number
-      final bookings = await apiService.fetchMyBookings();
+      // ---------------------------------------------------------
+      // CASE A: SUBSCRIPTION PAYMENT (Booking ID is -1)
+      // ---------------------------------------------------------
+      if (widget.bookingId == -1) {
+        targetPhone = "0788 123 456"; // REPLACE WITH YOUR COMPANY PHONE
+        titleText = "Pay to ISHARE";
+        subtitleText = "ISHARE Company Number";
+        
+        // No need to fetch booking details, so we stop loading immediately to show dialog
+        if (mounted) setState(() => _isProcessing = false);
+      } 
       
-      final currentBooking = bookings.firstWhere(
-        (b) => b.id == widget.bookingId,
-        orElse: () => throw Exception("Booking not found"),
-      );
-      
-      // Extract Driver's Phone from the Trip model
-      final driverPhone = currentBooking.trip?.driverPhone ?? "07XX XXX XXX";
+      // ---------------------------------------------------------
+      // CASE B: RIDE PAYMENT (Booking ID is normal)
+      // ---------------------------------------------------------
+      else {
+        // Fetch Booking Details to find Driver's Phone Number
+        final bookings = await apiService.fetchMyBookings();
+        
+        final currentBooking = bookings.firstWhere(
+          (b) => b.id == widget.bookingId,
+          orElse: () => throw Exception("Booking not found"),
+        );
+        
+        // Extract Driver's Phone from the Trip model
+        targetPhone = currentBooking.trip?.driverPhone ?? "07XX XXX XXX";
+        titleText = "Pay to Driver";
+        subtitleText = "Driver's Number";
 
-      // Stop loading so we can show the dialog
-      if (mounted) setState(() => _isProcessing = false);
+        // Stop loading so we can show the dialog
+        if (mounted) setState(() => _isProcessing = false);
+      }
 
-      // 2. Show the "Pay to Driver" Dialog
+      // ---------------------------------------------------------
+      // SHOW THE DIALOG (Shared for both)
+      // ---------------------------------------------------------
       final userConfirmed = await showDialog<bool>(
         context: context,
         barrierDismissible: false,
         builder: (ctx) => AlertDialog(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          title: const Row(
+          title: Row(
             children: [
-              Icon(Icons.phone_android, color: AppTheme.primaryBlue),
-              SizedBox(width: 10),
-              Text("Pay to Driver", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              const Icon(Icons.phone_android, color: AppTheme.primaryBlue),
+              const SizedBox(width: 10),
+              Text(titleText, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ],
           ),
           content: Column(
@@ -158,17 +182,16 @@ class _PaymentScreenState extends ConsumerState<PaymentScreen> {
                 child: Column(
                   children: [
                     SelectableText( // Allows user to copy the number
-                      driverPhone, 
+                      targetPhone, 
                       style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, letterSpacing: 1.5, color: AppTheme.primaryBlue)
                     ),
                     const SizedBox(height: 5),
-                    const Text("Driver's Number", style: TextStyle(color: Colors.grey, fontSize: 12)),
+                    Text(subtitleText, style: const TextStyle(color: Colors.grey, fontSize: 12)),
                   ],
                 ),
               ),
               const SizedBox(height: 20),
               
-              // --- UPDATED: RWF DISPLAY ---
               Text(
                 "Amount: ${formatRWF(widget.totalAmount)} RWF", 
                 style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)
@@ -201,20 +224,34 @@ class _PaymentScreenState extends ConsumerState<PaymentScreen> {
         ),
       );
 
-      // 3. If User Confirms, Tell Backend to Confirm Ticket
+      // ---------------------------------------------------------
+      // HANDLE CONFIRMATION
+      // ---------------------------------------------------------
       if (userConfirmed == true) {
         if (mounted) setState(() => _isProcessing = true);
         
-        final response = await apiService.simulatePayment(
-          bookingId: widget.bookingId,
-          amount: widget.totalAmount,
-          phoneNumber: _phoneController.text, // Just for record keeping
-        );
+        // IF SUBSCRIPTION: 
+        if (widget.bookingId == -1) {
+           // TODO: Call the real Subscribe API here in the next step
+           // For now, we simulate success
+           await Future.delayed(const Duration(seconds: 1));
+           if (mounted) {
+              _showPaymentSuccess(l10n, "SUB-${DateTime.now().millisecondsSinceEpoch}");
+           }
+        } 
+        // IF RIDE:
+        else {
+          final response = await apiService.simulatePayment(
+            bookingId: widget.bookingId,
+            amount: widget.totalAmount,
+            phoneNumber: _phoneController.text, // Just for record keeping
+          );
 
-        final transactionId = response['transaction_id'] ?? "MANUAL-CONFIRM";
-        
-        if (mounted) {
-           _showPaymentSuccess(l10n, transactionId);
+          final transactionId = response['transaction_id'] ?? "MANUAL-CONFIRM";
+          
+          if (mounted) {
+             _showPaymentSuccess(l10n, transactionId);
+          }
         }
       }
 
@@ -270,7 +307,13 @@ class _PaymentScreenState extends ConsumerState<PaymentScreen> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text("Your booking has been confirmed.", style: TextStyle(fontSize: 15)),
+            // Different message for Subscriptions vs Rides
+            Text(
+              widget.bookingId == -1 
+                  ? "Your subscription is now active!"
+                  : "Your booking has been confirmed.", 
+              style: const TextStyle(fontSize: 15)
+            ),
             const SizedBox(height: 16),
             Container(
               padding: const EdgeInsets.all(12),
@@ -295,7 +338,7 @@ class _PaymentScreenState extends ConsumerState<PaymentScreen> {
           TextButton(
             onPressed: () {
               Navigator.pop(context); // Close dialog
-              Navigator.pop(context, true); // Return 'true' to go to My Trips
+              Navigator.pop(context, true); // Return 'true'
             },
             child: Text(l10n.done, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           ),

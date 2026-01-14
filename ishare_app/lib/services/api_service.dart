@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/user_model.dart';
 import '../models/trip_model.dart';
 import '../models/booking_model.dart';
-import '../models/subscription_model.dart';
 
 // ⚠️ NETWORK CONFIGURATION
 const String baseUrl = "https://amiable-amazement-production-4d09.up.railway.app";
@@ -26,7 +25,7 @@ class ApiService {
       _dio.options.headers['Content-Type'] = 'application/json';
       _dio.options.headers['Accept'] = 'application/json';
     }
-    
+
     _dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) async {
         final token = await _storage.read(key: 'access_token');
@@ -39,11 +38,9 @@ class ApiService {
         return handler.next(options);
       },
       onError: (DioException e, handler) async {
-        // Better error logging for web CORS issues
+        // Better error logging
         if (kIsWeb && e.type == DioExceptionType.connectionError) {
           debugPrint('❌ CORS/Network Error: ${e.message}');
-          debugPrint('   This is likely a CORS configuration issue on the backend.');
-          debugPrint('   Backend URL: ${e.requestOptions.uri}');
         } else {
           debugPrint('❌ API Error: ${e.response?.statusCode} - ${e.message}');
         }
@@ -530,13 +527,11 @@ class ApiService {
     }
   }
 
-  // ✅ ADDED THIS METHOD TO MATCH YOUR DIALOG (Handles Map data)
   Future<void> submitRating(Map<String, dynamic> data) async {
     try {
       debugPrint('📤 Sending Rating Data: $data');
       
       // Map 'trip_id' to 'trip' if necessary (Django standard)
-      // If your backend serializer expects 'trip', we ensure it's mapped here.
       if (data.containsKey('trip_id') && !data.containsKey('trip')) {
         data['trip'] = data['trip_id'];
       }
@@ -579,50 +574,63 @@ class ApiService {
   }
 
   // =====================================================
-  // SUBSCRIPTION METHODS
+  // 6. SUBSCRIPTION METHODS
   // =====================================================
 
-  Future<Map<String, dynamic>> getSubscriptionStatus() async {
+  // ✅ 1. NEW METHOD: Fetch plans from the new backend
+  Future<List<dynamic>> fetchSubscriptionPlans() async {
     try {
-      final response = await _dio.get('/api/subscription/status/');
-      return response.data;
-    } catch (e) {
-      debugPrint('❌ Failed to get subscription status: $e');
-      rethrow;
+      final response = await _dio.get('/api/subscriptions/plans/');
+      return response.data; 
+    } on DioException catch (e) {
+      throw Exception(e.response?.data['message'] ?? "Failed to load plans");
     }
   }
 
+  // ✅ 2. NEW METHOD: Activate subscription
+  Future<void> activateSubscription(int planId) async {
+    try {
+      await _dio.post(
+        '/api/subscriptions/subscribe/',
+        data: {'plan_id': planId},
+      );
+    } on DioException catch (e) {
+      throw Exception(e.response?.data['message'] ?? "Failed to activate subscription");
+    }
+  }
+
+  // ✅ 3. COMPATIBILITY: Checks access using the NEW backend
+  // This maps the response to what 'create_trips_screen.dart' expects
   Future<Map<String, dynamic>> checkSubscriptionAccess() async {
     try {
-      final response = await _dio.get('/api/subscription/check/');
-      return response.data;
+      // We check against the new 'my-subscription' endpoint
+      final response = await _dio.get('/api/subscriptions/my-subscription/');
+      
+      // The new endpoint returns {'plan': ..., 'is_valid': true/false}
+      final bool isValid = response.data['is_valid'] == true;
+      
+      // Return the structure expected by CreateTripScreen
+      return {
+        'has_access': isValid,
+        'status': isValid ? 'active' : 'inactive',
+        'is_valid': isValid,
+      };
     } catch (e) {
       debugPrint('❌ Failed to check subscription access: $e');
-      rethrow;
+      // If error (e.g., 404 No Subscription), return false
+      return {'has_access': false, 'is_valid': false};
     }
   }
 
+  // ✅ 4. COMPATIBILITY: Dummy payment processor
+  // This is kept so CreateTripScreen doesn't crash if it tries to call it,
+  // but logically users should use the new PaymentScreen flow.
   Future<Map<String, dynamic>> processSubscriptionPayment({
     required String phoneNumber,
     String paymentMethod = 'mobile_money',
   }) async {
-    try {
-      final response = await _dio.post(
-        '/api/subscription/pay/',
-        data: {
-          'phone_number': phoneNumber,
-          'payment_method': paymentMethod,
-        },
-      );
-      debugPrint('✅ Subscription payment processed');
-      return response.data;
-    } catch (e) {
-      debugPrint('❌ Failed to process subscription payment: $e');
-      if (e is DioException && e.response != null) {
-        debugPrint('Server Response: ${e.response?.data}');
-      }
-      rethrow;
-    }
+    debugPrint("⚠️ processSubscriptionPayment called - logic moved to PaymentScreen");
+    return {'status': 'redirect', 'message': 'Use new payment screen'};
   }
 }
 

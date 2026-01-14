@@ -20,12 +20,15 @@ class ReviewModel {
 
   factory ReviewModel.fromJson(Map<String, dynamic> json) {
     return ReviewModel(
-      id: json['id'],
+      id: json['id'] ?? 0, // Safety default
       raterName: json['rater_name'] ?? "User",
       raterAvatar: json['rater_avatar'],
-      score: (json['score'] as num).toDouble(),
+      score: (json['score'] as num?)?.toDouble() ?? 5.0,
       comment: json['comment'] ?? "",
-      createdAt: DateTime.parse(json['created_at']),
+      // Safety check for date
+      createdAt: json['created_at'] != null 
+          ? DateTime.tryParse(json['created_at']) ?? DateTime.now() 
+          : DateTime.now(),
     );
   }
 }
@@ -53,23 +56,23 @@ class UserModel {
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
-    // Smart helper to find phone number
+    // Smart helper to find phone number regardless of nesting
     String? extractPhone() {
       if (json['phone_number'] != null) return json['phone_number'];
-      if (json['profile'] != null && json['profile']['phone_number'] != null) {
+      if (json['profile'] != null && json['profile'] is Map && json['profile']['phone_number'] != null) {
         return json['profile']['phone_number'];
       }
       return null;
     }
 
     return UserModel(
-      id: json['id'] as int,
-      username: json['username'] as String,
-      email: json['email'] as String? ?? '',
-      firstName: json['first_name'] as String?,
-      lastName: json['last_name'] as String?,
+      id: json['id'] is int ? json['id'] : 0, // Prevent crash if ID is missing
+      username: json['username'] ?? "Unknown",
+      email: json['email'] ?? '',
+      firstName: json['first_name'],
+      lastName: json['last_name'],
       phoneNumber: extractPhone(),
-      profilePicture: json['profile_picture'] as String?,
+      profilePicture: json['profile_picture'],
       isVerified: json['is_verified'] ?? false,
     );
   }
@@ -128,30 +131,36 @@ class UserProfileModel {
     this.vehicleModel,
     this.vehicleSeats,
     this.vehiclePhoto,
-    // ✅ Add to constructor
     required this.reviews, 
   });
 
   factory UserProfileModel.fromJson(Map<String, dynamic> json) {
+    // Check if 'user' key exists, otherwise try to use the root json if it looks like a user object
+    final userJson = json['user'] != null && json['user'] is Map<String, dynamic> 
+        ? json['user'] 
+        : json; // Fallback to self if flattened
+
     return UserProfileModel(
-      user: UserModel.fromJson(json['user']),
-      // Map both keys just in case
-      profilePicture: json['profile_picture'] as String? ?? json['avatar'] as String?, 
-      phoneNumber: json['phone_number'] as String? ?? json['phone'] as String?,
-      bio: json['bio'] as String?,
+      user: UserModel.fromJson(userJson),
+      
+      // Map keys safely (handle variations like 'avatar' vs 'profile_picture')
+      profilePicture: json['profile_picture'] ?? json['avatar'], 
+      phoneNumber: json['phone_number'] ?? json['phone'],
+      
+      bio: json['bio'],
       rating: (json['rating'] as num?)?.toDouble() ?? 5.0,
-      role: json['role'] as String?,
+      role: json['role'],
       
       createdAt: json['created_at'] != null 
-          ? DateTime.parse(json['created_at']) 
+          ? DateTime.tryParse(json['created_at']) ?? DateTime.now()
           : DateTime.now(),
 
-      vehiclePlateNumber: json['vehicle_plate_number'] as String?,
-      vehicleModel: json['vehicle_model'] as String?,
-      vehicleSeats: json['vehicle_seats'] as int?,
-      vehiclePhoto: json['vehicle_photo'] as String?,
+      vehiclePlateNumber: json['vehicle_plate_number'],
+      vehicleModel: json['vehicle_model'],
+      vehicleSeats: json['vehicle_seats'] is int ? json['vehicle_seats'] : int.tryParse(json['vehicle_seats']?.toString() ?? ""),
+      vehiclePhoto: json['vehicle_photo'],
 
-      // ✅ Map the list of reviews
+      // ✅ Map the list of reviews safely
       reviews: (json['reviews'] as List<dynamic>?)
           ?.map((e) => ReviewModel.fromJson(e))
           .toList() ?? [],

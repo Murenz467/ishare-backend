@@ -5,6 +5,7 @@ from django.views.static import serve
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/subscriptions/', include('subscriptions.urls')),
 
     # ✅ API Routes
     path('api/', include('api.urls')),

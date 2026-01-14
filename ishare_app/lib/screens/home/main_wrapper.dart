@@ -18,6 +18,9 @@ import 'create_trips_screen.dart';
 import 'my_trips.dart';
 import 'FindRides.dart';
 
+// ✅ NEW IMPORT: Subscription Screen
+import 'package:ishare_app/features/subscription/subscription_screen.dart';
+
 
 // ==============================================================================
 // STATE MANAGEMENT
@@ -45,7 +48,7 @@ class MainWrapper extends ConsumerWidget {
 
     return Scaffold(
       extendBody: false,
-      body: screens[selectedIndex], // Safe because we removed index 4
+      body: screens[selectedIndex], 
       bottomNavigationBar: Container(
         height: 60,
         decoration: BoxDecoration(
@@ -78,15 +81,13 @@ class MainWrapper extends ConsumerWidget {
               onTap: () => ref.read(selectedIndexProvider.notifier).state = 1
             ),
             
-            // 2. Trips (History is here now)
+            // 2. Trips
             _NavBarItem(
               icon: Icons.directions_car_rounded, 
               label: l10n.trips, 
               isActive: selectedIndex == 2, 
               onTap: () => ref.read(selectedIndexProvider.notifier).state = 2
             ),
-
-            // ❌ REMOVED: History Tab (Index 3) to prevent errors
 
             // 3. Profile
             _NavBarItem(
@@ -195,6 +196,10 @@ class HomeScreen extends ConsumerWidget {
                       const SizedBox(height: 20),
                       _buildImageActionsGrid(context, ref, isDesktop, isTablet, l10n),
                       
+                      // ✅ ADDED: Premium Banner
+                      const SizedBox(height: 32),
+                      const _PremiumBanner(),
+
                       const SizedBox(height: 50),
                       
                       // Recommended Trips Section
@@ -778,6 +783,82 @@ class _ValuePropTile extends StatelessWidget {
           )
         ]
       )
+    );
+  }
+}
+
+// ==============================================================================
+// ✅ FIXED PREMIUM BANNER WIDGET (Using ListTile to prevent infinite width errors)
+// ==============================================================================
+class _PremiumBanner extends StatelessWidget {
+  const _PremiumBanner();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [Color(0xFF1E3A8A), Color(0xFF2563EB)], 
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFF2563EB).withOpacity(0.3),
+            blurRadius: 15,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: ListTile(
+          contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          leading: Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.2),
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(Icons.workspace_premium_rounded, color: Colors.amber, size: 32),
+          ),
+          title: const Text(
+            "Upgrade to Premium",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          subtitle: Padding(
+            padding: const EdgeInsets.only(top: 4.0),
+            child: Text(
+              "Unlock exclusive discounts.",
+              style: TextStyle(
+                color: Colors.white.withOpacity(0.9),
+                fontSize: 13,
+              ),
+            ),
+          ),
+          trailing: ElevatedButton(
+            onPressed: () {
+               // Ensure navigation works
+               Navigator.push(context, MaterialPageRoute(builder: (_) => const SubscriptionScreen()));
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.white,
+              foregroundColor: const Color(0xFF1E3A8A),
+              elevation: 0,
+              // ✅ FIXED: Constrain width so it doesn't try to be infinite inside the row
+              minimumSize: const Size(100, 40), 
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            ),
+            child: const Text("View Plans", style: TextStyle(fontWeight: FontWeight.bold)),
+          ),
+        ),
+      ),
     );
   }
 }

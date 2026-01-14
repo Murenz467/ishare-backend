@@ -1,4 +1,4 @@
-package com.example.ishare_app
+package com.ishare.rwanda
 
 import io.flutter.embedding.android.FlutterActivity
 

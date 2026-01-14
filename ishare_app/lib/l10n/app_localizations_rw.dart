@@ -12,7 +12,7 @@ class AppLocalizationsRw extends AppLocalizations {
   String get home => 'Ahabanza';
 
   @override
-  String get find => 'Shaka';
+  String get find => 'Shakisha';
 
   @override
   String get trips => 'Ingendo';
@@ -24,13 +24,13 @@ class AppLocalizationsRw extends AppLocalizations {
   String get goodMorning => 'Mwaramutse,';
 
   @override
-  String get whereToNext => 'Uragana he?';
+  String get whereToNext => 'Ugiye he?';
 
   @override
-  String get searchRides => 'Shaka Ingendo';
+  String get searchRides => 'Shakisha Imodoka';
 
   @override
-  String get currentLocation => 'Aho uherereye';
+  String get currentLocation => 'Aho uri ubu';
 
   @override
   String get enterDestination => 'Andika aho ugiye...';
@@ -39,7 +39,7 @@ class AppLocalizationsRw extends AppLocalizations {
   String get quickActions => 'Ibikorwa byihuse';
 
   @override
-  String get findRide => 'Shaka Urugendo';
+  String get findRide => 'Shakisha Imodoka';
 
   @override
   String get bookNow => 'Bika Umwanya';
@@ -63,39 +63,40 @@ class AppLocalizationsRw extends AppLocalizations {
   String get ourStory => 'Inkuru yacu';
 
   @override
-  String get recommended => 'Ibyatoranyijwe';
+  String get recommended => 'Ibyo ugirwamo inama';
 
   @override
-  String get seeAll => 'Reba Byose';
+  String get seeAll => 'Reba byose';
 
   @override
-  String get whyIshare => 'Kuki iShare?';
+  String get whyIshare => 'Kuki wahitamo iShare?';
 
   @override
   String get saveCosts => 'Zigama';
 
   @override
-  String get saveCostsDesc => 'Gabana amafaranga ya lisansi.';
+  String get saveCostsDesc => 'Gabanya amafaranga ya lisansi n\'urugendo.';
 
   @override
-  String get ecoFriendly => 'Kurengera Ibidukikije';
+  String get ecoFriendly => 'Kurengera ibidukikije';
 
   @override
-  String get ecoFriendlyDesc => 'Gabanya imyuka ihumanya.';
+  String get ecoFriendlyDesc =>
+      'Gabanya ibyuka bihumanya ikirere usangira urugendo.';
 
   @override
-  String get community => 'Umuryango';
+  String get community => 'Umuryango mugari';
 
   @override
-  String get communityDesc => 'Menyana n\'abandi.';
+  String get communityDesc => 'Huza n\'abantu beza bo mu gace kanyu.';
 
   @override
   String seatsLeft(int count) {
-    return 'Imyanya $count isigaye';
+    return 'Hasigaye imyanya $count';
   }
 
   @override
-  String get totalPrice => 'Igiteranyo';
+  String get totalPrice => 'Igiciro cyose';
 
   @override
   String get pickUp => 'Aho guhagurukira';
@@ -107,7 +108,7 @@ class AppLocalizationsRw extends AppLocalizations {
   String get accountSettings => 'Igenamiterere rya Konti';
 
   @override
-  String get contactUs => 'Twandikire';
+  String get contactUs => 'Tuvugishe';
 
   @override
   String get logOut => 'Sohoka';
@@ -116,23 +117,23 @@ class AppLocalizationsRw extends AppLocalizations {
   String get paymentTitle => 'Kwishyura';
 
   @override
-  String get verificationRequired => 'Kugenzura Birakenewe';
+  String get verificationRequired => 'Hakenewe Ubugenzuzi';
 
   @override
   String get verifyAccountMsg =>
-      'Nyamuneka genzura konti yawe mbere yo kwishyura.';
+      'Nyamuneka emeza konti yawe mbere yo kwishyura.';
 
   @override
-  String get cancel => 'Kureka';
+  String get cancel => 'Hagarika';
 
   @override
-  String get verifyNow => 'Genzura Nonaha';
+  String get verifyNow => 'Emeza Ubu';
 
   @override
   String get paymentInitiated => 'Kwishyura byatangiye';
 
   @override
-  String get checkPhoneMsg => 'Reba kuri telefone yawe wemeze kwishyura.';
+  String get checkPhoneMsg => 'Nyamuneka reba telefoni yawe wemeze ubwishyu.';
 
   @override
   String get transactionId => 'Nomero y\'ihererekanya';
@@ -141,19 +142,19 @@ class AppLocalizationsRw extends AppLocalizations {
   String get amount => 'Amafaranga';
 
   @override
-  String get done => 'Byarangiye';
+  String get done => 'Byakozwe';
 
   @override
   String get paymentFailed => 'Kwishyura byanze';
 
   @override
-  String get accountVerified => 'Konti Yemejwe';
+  String get accountVerified => 'Konti yemejwe';
 
   @override
-  String get accountNotVerified => 'Konti Ntiyemejwe';
+  String get accountNotVerified => 'Konti ntiyemejwe';
 
   @override
-  String get totalAmount => 'Igiteranyo cyose';
+  String get totalAmount => 'Amafaranga yose';
 
   @override
   String get selectPaymentMethod => 'Hitamo uburyo bwo kwishyura';
@@ -162,40 +163,41 @@ class AppLocalizationsRw extends AppLocalizations {
   String get mobileMoney => 'Mobile Money';
 
   @override
-  String get cardPayment => 'Kwishyura ukoresheje Ikarita';
+  String get cardPayment => 'Ikarita ya Banki';
 
   @override
-  String get cardPaymentComingSoon => 'Kwishyura n\'ikarita biracyaza.';
+  String get cardPaymentComingSoon =>
+      'Kwishyura ukoresheje ikarita bizaza vuba. Koresha Mobile Money.';
 
   @override
-  String get bankTransfer => 'Kwishyura kuri Banki';
+  String get bankTransfer => 'Kohereza kuri Banki';
 
   @override
   String get bankTransferDetails =>
-      'Imyirondoro ya banki iroherezwa kuri email.';
+      'Amakuru yo kohereza kuri banki azoherezwa kuri imeli yawe.';
 
   @override
-  String get phoneNumber => 'Nomero ya Telefone';
+  String get phoneNumber => 'Nomero ya Telefoni';
 
   @override
   String get paymentPromptMsg =>
-      'Urabona ubutumwa bwo kwishyura kuri iyi nomero';
+      'Urakira ubutumwa bwo kwishyura kuri iyi nomero';
 
   @override
-  String get payNow => 'Ishyura Nonaha';
+  String get payNow => 'Ishyura Ubu';
 
   @override
-  String get verifyToPay => 'Genzura Konti ngo wishyure';
+  String get verifyToPay => 'Emeza Konti kugira ngo Wishyure';
 
   @override
-  String get verifyIdentity => 'Genzura Umwirondoro';
+  String get verifyIdentity => 'Emeza Umwirondoro';
 
   @override
   String get verifyIdentityTitle => 'Emeza Umwirondoro Wawe';
 
   @override
   String get verifyIdentitySubtitle =>
-      'Dukeneye kugenzura umwirondoro wawe mbere yuko utangaza urugendo';
+      'Tugomba kwemeza umwirondoro wawe mbere yuko utangaza urugendo';
 
   @override
   String get fullName => 'Amazina Yose';
@@ -217,7 +219,7 @@ class AppLocalizationsRw extends AppLocalizations {
   String get iAgreeTo => 'Nemeye ';
 
   @override
-  String get termsAndConditions => 'Amabwiriza n\'Amategeko';
+  String get termsAndConditions => 'Amategeko n\'Amabwiriza';
 
   @override
   String get and => ' na ';
@@ -226,10 +228,10 @@ class AppLocalizationsRw extends AppLocalizations {
   String get privacyPolicy => 'Politiki y\'Ibanga';
 
   @override
-  String get confirmAndContinue => 'Emeza kandi Ukomeze';
+  String get confirmAndContinue => 'Emeza hanyuma Ukomeze';
 
   @override
-  String get secureInfoMsg => 'Amakuru yawe ararinzwe';
+  String get secureInfoMsg => 'Amakuru yawe ararinze kandi afite umutekano';
 
   @override
   String get enterFullName => 'Andika amazina yawe yose';
@@ -238,31 +240,32 @@ class AppLocalizationsRw extends AppLocalizations {
   String get enterTwoNames => 'Andika nibura amazina abiri';
 
   @override
-  String get invalidNameChars => 'Amazina agomba kuba inyuguti gusa';
+  String get invalidNameChars => 'Amazina agomba kuba arimo inyuguti gusa';
 
   @override
   String get enterNationalId => 'Andika indangamuntu yawe';
 
   @override
-  String get invalidIdLength => 'Indangamuntu igomba kuba imibare 16';
+  String get invalidIdLength => 'Indangamuntu igomba kugira imibare 16';
 
   @override
-  String get invalidIdChars => 'Indangamuntu igomba kuba imibare gusa';
+  String get invalidIdChars => 'Indangamuntu igomba kuba irimo imibare gusa';
 
   @override
-  String get enterPhoneNumber => 'Andika nomero ya telefone';
+  String get enterPhoneNumber => 'Andika nomero yawe ya telefoni';
 
   @override
-  String get invalidPhone => 'Andika nomero y\'u Rwanda yemewe';
+  String get invalidPhone => 'Andika nomero ya telefoni y\'u Rwanda yemewe';
 
   @override
-  String get acceptTerms => 'Emeza amabwiriza mbere yo gukomeza';
+  String get acceptTerms => 'Emera amategeko mbere yo gukomeza';
 
   @override
-  String get verificationSuccess => 'Kugenzura byagenze neza!';
+  String get verificationSuccess => 'Kwemeza Byagenze Neza!';
 
   @override
-  String get verificationSuccessMsg => 'Umwirondoro wawe wemejwe.';
+  String get verificationSuccessMsg =>
+      'Umwirondoro wawe wemejwe. Ubu ushobora gutangira urugendo.';
 
   @override
   String get continueText => 'Komeza';
@@ -277,7 +280,7 @@ class AppLocalizationsRw extends AppLocalizations {
   String get details => 'Ibisobanuro';
 
   @override
-  String get review => 'Suzuma';
+  String get review => 'Subiramo';
 
   @override
   String get startingPoint => 'Aho guhagurukira';
@@ -286,10 +289,10 @@ class AppLocalizationsRw extends AppLocalizations {
   String get destination => 'Aho kujya';
 
   @override
-  String get vehicleModel => 'Ubwoko bw\'imodoka';
+  String get vehicleModel => 'Ubwoko bw\'Imodoka';
 
   @override
-  String get vehiclePhoto => 'Ifoto y\'imodoka';
+  String get vehiclePhoto => 'Ifoto y\'Imodoka';
 
   @override
   String get uploadCarPhoto => 'Kanda hano ushyireho ifoto';
@@ -301,7 +304,7 @@ class AppLocalizationsRw extends AppLocalizations {
   String get price => 'Igiciro';
 
   @override
-  String get planRoute => 'Tegura Inzira';
+  String get planRoute => 'Tegura Inzira Yawe';
 
   @override
   String get vehicleDetails => 'Ibiranga Ikinyabiziga';
@@ -313,22 +316,22 @@ class AppLocalizationsRw extends AppLocalizations {
   String get summary => 'Incamake';
 
   @override
-  String get planRouteDesc => 'Urahagurukira he kandi urajya he?';
+  String get planRouteDesc => 'Urahagurukira he kandi ugiye he?';
 
   @override
-  String get vehicleDetailsDesc => 'Bwira abagenzi iby\'imodoka yawe.';
+  String get vehicleDetailsDesc => 'Bwira abagenzi ibyerekeye imodoka yawe.';
 
   @override
-  String get tripInfoDesc => 'Shyiraho igihe n\'ibiciro.';
+  String get tripInfoDesc => 'Shyiraho gahunda n\'ibiciro.';
 
   @override
-  String get summaryDesc => 'Suzuma byose mbere yo gutangaza.';
+  String get summaryDesc => 'Reba byose mbere yo gutangaza.';
 
   @override
   String get publishRide => 'Tangaza Urugendo';
 
   @override
-  String get fillFormHelp => 'Uzuza imyirondoro kugira ngo utangaze urugendo.';
+  String get fillFormHelp => 'Yuzuza ifishi kugira ngo utangaze urugendo.';
 
   @override
   String get from => 'Kuva';
@@ -337,60 +340,60 @@ class AppLocalizationsRw extends AppLocalizations {
   String get to => 'Kugera';
 
   @override
-  String get searchComingSoon => 'Gushaka biracyaza!';
+  String get searchComingSoon => 'Gushakisha bizaza vuba!';
 
   @override
   String get searchFeatureDesc =>
-      'Uzabasha gushaka ingendo ukurikije aho, itariki, n\'igiciro.';
+      'Uzashobora gushakisha ingendo ukurikije aho, itariki, n\'igiciro hano.';
 
   @override
-  String get emergencySOS => 'Ubutabazi SOS';
+  String get emergencySOS => 'Ubutabazi Bwihutirwa (SOS)';
 
   @override
-  String get sosActive => 'SOS irakora';
+  String get sosActive => 'SOS Iratabaje';
 
   @override
-  String get pressAndHold => 'Kanda umare amasegonda 3';
+  String get pressAndHold => 'Kanda utirekura amasegonda 3';
 
   @override
-  String get sosActivated => 'SOS Yemejwe';
+  String get sosActivated => 'SOS Yatabaje';
 
   @override
-  String get emergencyAlertSent => 'Ubutumwa bwo gutabaza bwoherejwe kuri:';
+  String get emergencyAlertSent => 'Ubutabazi bwoherejwe kuri:';
 
   @override
   String get emergencyContacts => 'Nomero z\'Ubutabazi';
 
   @override
-  String get ishareSupport => 'Ikipe ya iShare';
+  String get ishareSupport => 'Ikipe ishinzwe ubufasha ya iShare';
 
   @override
-  String get currentTripDriver => 'Umushoferi/Umugenzi w\'urugendo ruriho';
+  String get currentTripDriver => 'Umushoferi/Umugenzi w\'urugendo ruri kuba';
 
   @override
-  String get liveLocationShared => 'Aho uherereye harasangizwa.';
+  String get liveLocationShared => 'Aho uherereye harimo gusangizwa abandi.';
 
   @override
   String get call112 => 'Hamagara 112';
 
   @override
-  String get shareLocation => 'Sangiza aho uri';
+  String get shareLocation => 'Sangiza Aho Uri';
 
   @override
   String get shareLocationDesc =>
-      'Aho uri ubu harohererezwa abo wahisemo kuri SMS.';
+      'Aho uherereye ubu harahita hoherezwa ku bo wahisemo ukoresheje SMS.';
 
   @override
-  String get locationSharedSuccess => 'Aho uri hasangijwe!';
+  String get locationSharedSuccess => 'Aho uherereye hoherejwe neza!';
 
   @override
-  String get share => 'Sangiza';
+  String get share => 'Sangiza abandi';
 
   @override
   String get cancelTrip => 'Hagarika Urugendo';
 
   @override
-  String get tripCancelRequest => 'Gusaba guhagarika urugendo';
+  String get tripCancelRequest => 'Ubusabe bwo guhagarika urugendo';
 
   @override
   String get police => 'Polisi y\'Igihugu';
@@ -399,7 +402,7 @@ class AppLocalizationsRw extends AppLocalizations {
   String get ambulance => 'Imbangukiragutabara';
 
   @override
-  String get fireBrigade => 'Kuzimya Inkongi';
+  String get fireBrigade => 'Ishami rishinzwe kuzimya inkongi';
 
   @override
   String get emergencyServices => 'Serivisi z\'Ubutabazi';
@@ -408,25 +411,25 @@ class AppLocalizationsRw extends AppLocalizations {
   String get safetyTips => 'Inama z\'Umutekano';
 
   @override
-  String get verifyDriver => 'Genzura Umushoferi';
+  String get verifyDriver => 'Emeza Umushoferi';
 
   @override
   String get verifyDriverDesc =>
-      'Buri gihe genzura izina, ifoto, n\'imodoka by\'umushoferi mbere yo kwinjira.';
+      'Buri gihe genzura izina ry\'umushoferi, ifoto, n\'imodoka mbere yo kwinjira.';
 
   @override
-  String get shareTrip => 'Sangiza Urugendo';
+  String get shareTrip => 'Sangiza abandi Urugendo';
 
   @override
   String get shareTripDesc =>
-      'Sangiza amakuru y\'urugendo inshuti n\'umuryango mbere yo kugenda.';
+      'Sangiza inshuti cyangwa umuryango amakuru y\'urugendo rwawe mbere yo kugenda.';
 
   @override
-  String get stayConnected => 'Guma ku Murongo';
+  String get stayConnected => 'Gumana Itumanaho';
 
   @override
   String get stayConnectedDesc =>
-      'Shyira umuriro muri telefone yawe mu rugendo.';
+      'Komeza telefoni yawe yaka mu gihe cy\'urugendo.';
 
   @override
   String get checkRatings => 'Reba Amanota';
@@ -436,18 +439,18 @@ class AppLocalizationsRw extends AppLocalizations {
       'Reba amanota n\'ibitekerezo by\'abandi bagenzi ku mushoferi.';
 
   @override
-  String get reportIssues => 'Tanga Raporo';
+  String get reportIssues => 'Tanga Raporo y\'Ibibazo';
 
   @override
   String get reportIssuesDesc =>
-      'Menyesha niba hari imyitwarire idasanzwe cyangwa ikibazo cy\'umutekano.';
+      'Menyesha vuba niba hari imyitwarire iteye inkeke.';
 
   @override
-  String get safetyMatters => 'Umutekano wawe ni ingenzi';
+  String get safetyMatters => 'Umutekano Wawe Urahenze';
 
   @override
   String get safetyCommitment =>
-      'iShare yiyemeje gutanga serivisi zizewe. Abashoferi bose baragenzuwe.';
+      'iShare yiyemeje gutanga serivisi zizewe kandi zifite umutekano. Abashoferi bose baragenzuwe.';
 
   @override
   String get call => 'Hamagara';
@@ -459,139 +462,149 @@ class AppLocalizationsRw extends AppLocalizations {
   String get appName => 'iShare';
 
   @override
-  String get appTagline => 'Sangiza Urugendo, Gabana Igiciro';
+  String get appTagline => 'Sangira Urugendo, Sangira Igiciro';
 
   @override
-  String get appDescriptionShort => 'Urubuga rwo gusangira ingendo';
+  String get appDescriptionShort =>
+      'Urubuga rw\'ingendo rusange no kugabana ibiciro';
 
   @override
   String get visionTitle => '🎯 Icyerekezo';
 
   @override
   String get visionText =>
-      'Guhindura gutwara abantu mu Rwanda no muri Afurika y\'Iburasirazuba.';
+      'Guhindura ubwikorezi mu Rwanda no muri Afurika y\'Iburasirazuba duhanga urubuga rwizewe, rurengera ibidukikije, kandi ruhendutse.';
 
   @override
   String get missionTitle => '🚀 Intego';
 
   @override
   String get missionText =>
-      'Guhuza abafite imodoka n\'abagenzi kugira ngo bagabanye ibiciro.';
+      'Guhuza ba nyir\'imodoka bafite imyanya irimo ubusa n\'abagenzi bajya hamwe, kugabanya ibiciro, umubyigano, n\'ibyuka bihumanya.';
 
   @override
   String get problemTitle => '❓ Ikibazo';
 
   @override
   String get problemText =>
-      'Ibiciro bya lisansi bihanitse, umubyigano w\'imodoka, no kubura imodoka.';
+      'Ibiciro bya lisansi birazamuka, umubyigano mu muhanda, kandi gutega biragoye. Imodoka nyinshi zigenda zifite imyanya 3-4 irimo ubusa.';
 
   @override
-  String get solutionTitle => '✅ Igisubizo';
+  String get solutionTitle => '✅ Igisubizo Cyacu';
 
   @override
-  String get solutionText => 'iShare ihuza abashoferi n\'abagenzi.';
+  String get solutionText =>
+      'iShare ihuza abashoferi n\'abagenzi. Abashoferi babona amafaranga ya lisansi, abagenzi bakagenda neza ku giciro gito.';
 
   @override
   String get howItWorks => '📱 Uko Bikora';
 
   @override
-  String get step1Title => 'Umushoferi atangaza urugendo';
+  String get step1Title => 'Umushoferi Atangaza Urugendo';
 
   @override
-  String get step1Desc => 'Ashyiraho igihe, imyanya, n\'igiciro.';
+  String get step1Desc =>
+      'Umushoferi ugiye ahantu atangaza amakuru (igihe, imyanya, igiciro).';
 
   @override
-  String get step2Title => 'Umugenzi arabika';
+  String get step2Title => 'Umugenzi Arakatisha';
 
   @override
-  String get step2Desc => 'Abagenzi bashaka ingendo bakabika umwanya.';
+  String get step2Desc =>
+      'Abagenzi bashakisha ingendo bagakatisha umwanya ako kanya.';
 
   @override
   String get step3Title => 'Kugendana';
 
   @override
-  String get step3Desc => 'Barahura bagafatanya urugendo.';
+  String get step3Desc => 'Bahurira aho bemeranyije bakaryoherwa n\'urugendo.';
 
   @override
-  String get step4Title => 'Amanota no Kwishyura';
+  String get step4Title => 'Gutanga Amanota & Kwishyura';
 
   @override
-  String get step4Desc => 'Kwishyura birakorwa hanyuma bagahana amanota.';
+  String get step4Desc =>
+      'Kwishyura birakorwa hanyuma bombi bagaha amanota mugenzi wabo.';
 
   @override
-  String get keyFeatures => '⚡ Iby\'ingenzi';
+  String get keyFeatures => '⚡ Ibiranga Porogaramu';
 
   @override
-  String get feat1Title => 'Abakoresha bagenzuwe';
+  String get feat1Title => 'Abakoresha Bemejwe';
 
   @override
-  String get feat1Desc => 'Kugenzura umwirondoro na telefone.';
+  String get feat1Desc =>
+      'Kugenzura indangamuntu na telefoni ku bwo umutekano.';
 
   @override
-  String get feat2Title => 'Gukurikirana';
+  String get feat2Title => 'Kureba Aho Uri';
 
   @override
-  String get feat2Desc => 'Gusangiza aho uherereye.';
+  String get feat2Desc => 'Sangiza aho uherereye ku bwo umutekano.';
 
   @override
-  String get feat3Title => 'Gushaka byimbitse';
+  String get feat3Title => 'Gushakisha';
 
   @override
-  String get feat3Desc => 'Gushaka ukurikije umujyi, itariki, cyangwa igiciro.';
+  String get feat3Desc =>
+      'Shakisha ingendo ukurikije umujyi, itariki, cyangwa igiciro.';
 
   @override
-  String get feat4Title => 'Kwishyura bizewe';
+  String get feat4Title => 'Kwishyura Bifite Umutekano';
 
   @override
-  String get feat4Desc => 'Mobile Money na Banki.';
+  String get feat4Desc => 'Mobile Money & Ikarita ya Banki.';
 
   @override
-  String get feat5Title => 'Amanota';
+  String get feat5Title => 'Amanota & Ibitekerezo';
 
   @override
-  String get feat5Desc => 'Kwizera binyuze mu bitekerezo by\'abandi.';
+  String get feat5Desc =>
+      'Kubaka icyizere binyuze mu bitekerezo by\'abakoresha.';
 
   @override
-  String get feat6Title => 'SOS';
+  String get feat6Title => 'SOS & Umutekano';
 
   @override
-  String get feat6Desc => 'Ubutabazi bwihuse.';
+  String get feat6Desc => 'Ubutabazi bwihuse no guhamagara vuba.';
 
   @override
   String get ourImpact => '🌍 Ingaruka Nziza';
 
   @override
-  String get impact1 => 'Kugabanya umubyigano w\'imodoka.';
+  String get impact1 => 'Kugabanya umubyigano mu muhanda.';
 
   @override
-  String get impact2 => 'Kurengera ibidukikije.';
+  String get impact2 => 'Kugabanya ibyuka bihumanya (Green Mobility).';
 
   @override
-  String get impact3 => 'Kuzigama amafaranga.';
+  String get impact3 => 'Kuzigamira abashoferi n\'abagenzi.';
 
   @override
-  String get vision2050Title => '🇷🇼 Icyerekezo 2050';
+  String get vision2050Title => '🇷🇼 Ijyanye na Rwanda Vision 2050';
 
   @override
-  String get vision2050Intro => 'iShare ijyanye na Gahunda y\'u Rwanda:';
+  String get vision2050Intro =>
+      'iShare igira uruhare muri gahunda za Vision 2050:';
 
   @override
-  String get visionPoint1 => 'Imijyi igezweho.';
+  String get visionPoint1 => 'Imijyi igezweho & kurengera ibidukikije.';
 
   @override
   String get visionPoint2 => 'Serivisi z\'ikoranabuhanga.';
 
   @override
-  String get visionPoint3 => 'Guhanga udushya.';
+  String get visionPoint3 => 'Guhanga udushya & kwihangira imirimo.';
 
   @override
-  String get longTermVision => '🚀 Icyerekezo Kirambye';
+  String get longTermVision => '🚀 Icyerekezo cy\'Igihe Kirekire';
 
   @override
-  String get longTermText => 'Kwaguka muri EAC.';
+  String get longTermText =>
+      'Tugamije kwaguka muri EAC, tugatuma ingendo zambukiranya imipaka ziba nziza kandi zihendutse.';
 
   @override
-  String get targetCountries => 'Ibihugu:';
+  String get targetCountries => 'Ibihugu Twibandaho:';
 
   @override
   String get countryRwanda => 'Rwanda';
@@ -615,16 +628,18 @@ class AppLocalizationsRw extends AppLocalizations {
   String get copyrightOwner => 'iShare Rwanda Ltd';
 
   @override
-  String get ipNotice => 'Uburenganzira bwose burubahirizwa.';
+  String get ipNotice =>
+      'Uburenganzira bwose burubahirijwe. Iyi software ni umutungo mu by\'ubwenge wa iShare Rwanda.';
 
   @override
   String get hereToHelp => 'Turi hano kugira ngo tugufashe!';
 
   @override
-  String get reachOutMsg => 'Twandikire igihe cyose.';
+  String get reachOutMsg =>
+      'Tuvugishe igihe cyose, twishimira kumva ibitekerezo byawe.';
 
   @override
-  String get findUsHere => 'Dusange hano';
+  String get findUsHere => 'Turi Hano';
 
   @override
   String get directions => 'Icyerekezo';
@@ -639,7 +654,7 @@ class AppLocalizationsRw extends AppLocalizations {
   String get callUs => 'Duhamagare';
 
   @override
-  String get email => 'Email';
+  String get email => 'Imeli';
 
   @override
   String get hours => 'Amasaha';
@@ -657,105 +672,107 @@ class AppLocalizationsRw extends AppLocalizations {
   String get sunday => 'Ku Cyumweru';
 
   @override
-  String get closed => 'Barafunze';
+  String get closed => 'Harafunze';
 
   @override
-  String get connectWithUs => 'Dukurikire';
+  String get connectWithUs => 'Kurikira imbuga zacu';
 
   @override
-  String get haveQuestions => 'Ufite ibibazo?';
+  String get haveQuestions => 'Ufite Ibibazo?';
 
   @override
-  String get sendMessageDesc => 'Ohereza ubutumwa, turagusubiza mu masaha 24.';
+  String get sendMessageDesc =>
+      'Twandikire ubutumwa turagusubiza mu masaha 24.';
 
   @override
   String get sendMessage => 'Ohereza Ubutumwa';
 
   @override
-  String get driverVerificationTitle => 'Kugenzura Umushoferi';
+  String get driverVerificationTitle => 'Kwemeza Umushoferi';
 
   @override
-  String get whyVerification => 'Kubera Iki?';
+  String get whyVerification => 'Kuki Kwemeza Umwirondoro?';
 
   @override
-  String get verificationDesc => 'Kubw\'umutekano n\'icyizere.';
+  String get verificationDesc =>
+      'Kwemeza umwirondoro bitanga umutekano n\'icyizere ku bakoresha bose. Amakuru yawe abikwa neza mu ibanga.';
 
   @override
   String get verificationSubmitted => 'Byoherejwe!';
 
   @override
   String get verificationReviewMsg =>
-      'Tuzasuzuma ubusabe bwawe mu masaha 24-48.';
+      'Ubusabe bwawe bwoherejwe. Turasuzuma amakuru yawe tugusubize mu masaha 24-48.';
 
   @override
-  String get myActivity => 'Ibikorwa byanjye';
+  String get myActivity => 'Ibikorwa Byanjye';
 
   @override
-  String get bookedRides => 'Ingendo Nabitse';
+  String get bookedRides => 'Ingendo Nakatishije';
 
   @override
   String get postedRides => 'Ingendo Natangaje';
 
   @override
-  String get postRide => 'Tangaza';
+  String get postRide => 'Tangaza Urugendo';
 
   @override
-  String get noBookedRides => 'Nta rugendo wabitse';
+  String get noBookedRides => 'Nta rugendo urakatisha';
 
   @override
-  String get noBookedRidesDesc => 'Ingendo zawe zizagaragara hano.';
+  String get noBookedRidesDesc => 'Ingendo zawe zitaha zizagaragara hano.';
 
   @override
-  String get noPostedRides => 'Nta rugendo watangaje';
+  String get noPostedRides => 'Nta rugendo uratangaza';
 
   @override
   String get noPostedRidesDesc =>
-      'Tangaza urugendo utangire gukorera amafaranga.';
+      'Korera amafaranga utangaza urugendo uyu munsi.';
 
   @override
   String get seats => 'Imyanya';
 
   @override
-  String get upcoming => 'Iri imbere';
+  String get upcoming => 'Iby\'imbere';
 
   @override
-  String get completed => 'Yarangiye';
+  String get completed => 'Byarangiye';
 
   @override
   String get viewPassengers => 'Reba Abagenzi';
 
   @override
-  String get submitVerification => 'Ohereza';
+  String get submitVerification => 'Ohereza Ubugenzuzi';
 
   @override
   String get myTripsTitle => 'Ingendo Zanjye';
 
   @override
-  String get bookedTab => 'Nabitse';
+  String get bookedTab => 'Nakatishije';
 
   @override
   String get offeredTab => 'Natangaje';
 
   @override
-  String get noBookingsMessage => 'Nta rugendo urabika.';
+  String get noBookingsMessage => 'Nta rugendo urakatisha.';
 
   @override
   String get noOffersMessage => 'Nta rugendo uratangaza.';
 
   @override
-  String get welcomeTitle => 'Welcome to iShare';
+  String get welcomeTitle => 'Murakaza neza kuri iShare';
 
   @override
-  String get welcomeSubtitle => 'Your ride-sharing platform';
+  String get welcomeSubtitle => 'Urubuga rw\'ingendo rusange';
 
   @override
-  String get statUsers => 'Users';
+  String get statUsers => 'Abakoresha';
 
   @override
-  String get statTrips => 'Trips';
+  String get statTrips => 'Ingendo';
 
   @override
-  String get statRating => 'Rating';
+  String get statRating => 'Amanota';
 
   @override
   String get today => 'Uyu munsi';
@@ -764,160 +781,163 @@ class AppLocalizationsRw extends AppLocalizations {
   String get tomorrow => 'Ejo';
 
   @override
-  String get noRidesAvailable => 'No rides available';
+  String get noRidesAvailable => 'Nta modoka zihari';
 
   @override
-  String get onboardTitle1 => 'Travel with\nConfidence';
+  String get onboardTitle1 => 'Genda Utekanye';
 
   @override
   String get onboardDesc1 =>
-      'Verified drivers, real-time tracking, and 24/7 support.';
+      'Abashoferi bemejwe, kureba aho uri, n\'ubufasha 24/7.';
 
   @override
-  String get onboardTitle2 => 'Share Costs,\nShare Smiles';
+  String get onboardTitle2 => 'Gabana Igiciro,\nWishime';
 
   @override
-  String get onboardDesc2 => 'Connect with people on your route and save.';
+  String get onboardDesc2 => 'Huza n\'abantu mujya hamwe muzigame.';
 
   @override
-  String get onboardTitle3 => 'Fast & Reliable\nTransport';
+  String get onboardTitle3 => 'Ingendo Zihuse\nKandi Zizewe';
 
   @override
-  String get onboardDesc3 => 'Find a ride in minutes. No more waiting.';
+  String get onboardDesc3 => 'Bona imodoka mu minota mike. Nta gutegereza.';
 
   @override
-  String get getStarted => 'Get Started';
+  String get getStarted => 'Tangira';
 
   @override
-  String get alreadyHaveAccount => 'Already have an account?';
+  String get alreadyHaveAccount => 'Ufite konti?';
 
   @override
   String get login => 'Injira';
 
   @override
-  String get username => 'Izina';
+  String get username => 'Izina ukoresha';
 
   @override
-  String get password => 'Ijambo ry\'Ibanga';
+  String get password => 'Ijambo ry\'ibanga';
 
   @override
   String get forgotPassword => 'Wibagiwe ijambo ry\'ibanga?';
 
   @override
-  String get orContinue => 'Cyangwa ukomeze na';
+  String get orContinue => 'Cyangwa komeza na';
 
   @override
-  String get newToApp => 'Urakeneye konti?';
+  String get newToApp => 'Mushya kuri iShare?';
 
   @override
   String get register => 'Iyandikishe';
 
   @override
-  String get fillAllFields => 'Uzuza imyanya yose.';
+  String get fillAllFields => 'Nyamuneka yuzuza imyanya yose.';
 
   @override
-  String get incorrectCredentials => 'Amakuru si yo.';
+  String get incorrectCredentials =>
+      'Amakuru si yo. Nyamuneka gerageza nanone.';
 
   @override
-  String get welcomeBack => 'Murakaza neza!';
+  String get welcomeBack => 'Muraho,\nMurakaza neza nanone!';
 
   @override
-  String get loginSecurely => 'Injira muri konti yawe.';
+  String get loginSecurely => 'Injira neza muri konti yawe ya iShare.';
 
   @override
   String get createAccount => 'Fungura Konti';
 
   @override
-  String get joinIshare => 'Injira muri iShare';
+  String get joinIshare => 'Iyandikishe kuri iShare';
 
   @override
   String get firstName => 'Izina';
 
   @override
-  String get lastNameOptional => 'Irindi zina (Si ngombwa)';
+  String get lastNameOptional => 'Irindi Zina (Ubishaka)';
 
   @override
-  String get emailAddress => 'Imeli';
+  String get emailAddress => 'Aderesi ya Imeli';
 
   @override
   String get registerAction => 'IYANDIKISHE';
 
   @override
-  String get fillAllRequired => 'Uzuza ibikenewe byose.';
+  String get fillAllRequired => 'Nyamuneka yuzuza ahatunganwa hose.';
 
   @override
-  String get registrationSuccess => 'Kwiyandikisha byakunze! Injira.';
+  String get registrationSuccess => 'Kwiyandikisha byakunze! Nyamuneka injira.';
 
   @override
   String get registrationFailed => 'Kwiyandikisha byanze: ';
 
   @override
-  String get myTicket => 'Tike Yanjye';
+  String get myTicket => 'Itike Yanjye';
 
   @override
-  String get tripUnavailable => 'Urugendo ntirubonetse';
+  String get tripUnavailable => 'Amakuru y\'urugendo ntaboneka';
 
   @override
-  String get bookingId => 'Nomero yo Kubika';
+  String get bookingId => 'ID yo Gukatisha';
 
   @override
   String get dateLabel => 'Itariki';
 
   @override
-  String get bookedStatus => 'Byabitswe';
+  String get bookedStatus => 'Byakatiwe';
 
   @override
   String get driverLabel => 'Umushoferi';
 
   @override
-  String get ticketInstruction => 'Ereka umushoferi iyi tike.';
+  String get ticketInstruction =>
+      'Ereka iyi tike umushoferi mbere yo kwinjira.';
 
   @override
-  String get tripDetails => 'Amakuru y\'Urugendo';
+  String get tripDetails => 'Ibisobanuro by\'Urugendo';
 
   @override
-  String get estimatedEarnings => 'Inyungu';
+  String get estimatedEarnings => 'Inyungu Uteganya';
 
   @override
-  String get totalRevenue => 'Igiteranyo';
+  String get totalRevenue => 'Amafaranga Yose';
 
   @override
   String get passengerManifest => 'Urutonde rw\'Abagenzi';
 
   @override
   String bookedCount(int count) {
-    return '$count Babitse';
+    return '$count Bakatishije';
   }
 
   @override
-  String get noPassengers => 'Nta mugenzi.';
+  String get noPassengers => 'Nta bagenzi baraboneka.';
 
   @override
-  String get paidStatus => 'YISHYUWE';
+  String get paidStatus => 'BISHYUWE';
 
   @override
-  String get cancelTripTitle => 'Guhagarika?';
+  String get cancelTripTitle => 'Guhagarika Urugendo?';
 
   @override
-  String get cancelTripMessage => 'Urugendo rurarangira kuri bose.';
+  String get cancelTripMessage =>
+      'Ibi birahagarika urugendo ku bagenzi bose kandi bibamenyeshe. Urakoze neza?';
 
   @override
-  String get keepTrip => 'Oya, Komeza';
+  String get keepTrip => 'Oya, Komeza Urugendo';
 
   @override
   String get yesCancel => 'Yego, Hagarika';
 
   @override
-  String get callingPassenger => 'Guhamagara...';
+  String get callingPassenger => 'Guhamagara umugenzi...';
 
   @override
-  String get errorLoadingBookings => 'Kudana byanze: ';
+  String get errorLoadingBookings => 'Ikibazo mu kureba abakatishije: ';
 
   @override
   String get aboutSection => 'Ibyerekeye';
 
   @override
-  String get noBio => 'Nta mwirondoro.';
+  String get noBio => 'Nta makuru yitanzweho.';
 
   @override
   String joinedDate(String date) {
@@ -925,19 +945,19 @@ class AppLocalizationsRw extends AppLocalizations {
   }
 
   @override
-  String get vehicleSection => 'Imodoka';
+  String get vehicleSection => 'Ikinyabiziga';
 
   @override
-  String get noCarPhoto => 'Nta foto';
+  String get noCarPhoto => 'Nta foto y\'imodoka ihari';
 
   @override
-  String get unknownModel => 'Ubwoko butazwi';
+  String get unknownModel => 'Ubwoko ntibuzwi';
 
   @override
   String get noPlateInfo => 'Nta plaque';
 
   @override
-  String get errorLoadProfile => 'Kudana byanze';
+  String get errorLoadProfile => 'Ntibishoboye kureba umwirondoro';
 
   @override
   String get mapView => 'Ikarita';
@@ -946,35 +966,36 @@ class AppLocalizationsRw extends AppLocalizations {
   String get listView => 'Urutonde';
 
   @override
-  String get shareRide => 'Sangiza';
+  String get shareRide => 'Sangiza Urugendo';
 
   @override
   String shareMessage(String driver, String car, String from, String to) {
-    return 'Ndi mu rugendo na iShare: $from kugera $to';
+    return 'Hey! Ndi mu rugendo na ISHARE.\n\n🚗 Umushoferi: $driver\n🚙 Imodoka: $car\n📍 Urugendo: $from ➝ $to';
   }
 
   @override
-  String get paymentAlreadyPaidTitle => 'Byarishyuwe';
+  String get paymentAlreadyPaidTitle => 'Byamaze Kwishyurwa';
 
   @override
-  String get paymentAlreadyPaidMsg => 'Urugendo rwarishyuwe.';
+  String get paymentAlreadyPaidMsg =>
+      'Iyi tike yamaze kwishyurwa. Ushobora kuyibona mu ngendo zawe.';
 
   @override
-  String get viewTrips => 'Reba ingendo';
+  String get viewTrips => 'Reba Ingendo';
 
   @override
-  String get approvePayment => 'Emeza Kwishyura';
+  String get approvePayment => 'Emeza Ubwishyu';
 
   @override
-  String get checkPhoneTitle => 'Reba telefone yawe';
+  String get checkPhoneTitle => 'Nyamuneka reba telefoni yawe.';
 
   @override
   String sentPromptTo(String phone) {
-    return 'Byoherejwe kuri $phone.';
+    return 'Ubutumwa bwoherejwe kuri $phone. Shyiramo PIN yawe kwemeza.';
   }
 
   @override
-  String get iHaveApproved => 'Nemeye';
+  String get iHaveApproved => 'Nemeje';
 
   @override
   String get ok => 'OK';
@@ -986,16 +1007,16 @@ class AppLocalizationsRw extends AppLocalizations {
   String get cardSubtitle => 'Visa, Mastercard';
 
   @override
-  String get bankTransferSubtitle => 'Banki';
+  String get bankTransferSubtitle => 'Kohereza ako kanya';
 
   @override
   String get phoneHint => 'urugero: 0788123456';
 
   @override
-  String get enterPhoneError => 'Shyiramo nomero';
+  String get enterPhoneError => 'Nyamuneka andika nomero ya telefoni';
 
   @override
-  String get invalidPhoneError => 'Nomero sibyo';
+  String get invalidPhoneError => 'Nomero ya telefoni sizo';
 
   @override
   String get rideRequests => 'Ubusabe bw\'Ingendo';
@@ -1008,7 +1029,7 @@ class AppLocalizationsRw extends AppLocalizations {
 
   @override
   String get paymentInstructions =>
-      'Ohereza amafaranga kuri iyi nomero ukoresheje Mobile Money. Nyuma yo kwishyura, ifatabuguzi ryawe rizahita rikomerezaho.';
+      'Nyamuneka ohereza amafaranga y\'ifatabuguzi kuri iyi nomero ukoresheje Mobile Money (MTN/Airtel). Nyuma yo kwishyura, ifatabuguzi ryawe rizahita ritangira.';
 
   @override
   String get subscriptionTitle => 'Ifatabuguzi';
@@ -1020,10 +1041,10 @@ class AppLocalizationsRw extends AppLocalizations {
   String get trialPeriod => 'Igihe cy\'Igerageza';
 
   @override
-  String get activeSubscription => 'Ifatabuguzi Rirakora';
+  String get activeSubscription => 'Ifatabuguzi rirakora';
 
   @override
-  String get subscriptionExpired => 'Ifatabuguzi Ryarangiye';
+  String get subscriptionExpired => 'Ifatabuguzi ryararangiye';
 
   @override
   String daysRemaining(int days) {
@@ -1044,7 +1065,7 @@ class AppLocalizationsRw extends AppLocalizations {
   String get renewSubscription => 'Vugurura Ifatabuguzi';
 
   @override
-  String get subscribeNow => 'Iyandikishe Nonaha';
+  String get subscribeNow => 'Iyandikishe Ubu';
 
   @override
   String payAmount(String amount) {
@@ -1053,7 +1074,7 @@ class AppLocalizationsRw extends AppLocalizations {
 
   @override
   String trialEndsIn(int days) {
-    return 'Igerageza rizarangira mu minsi $days.';
+    return 'Igerageza ryawe rizarangira mu minsi $days. Iyandikishe ubu kugira ngo uzakomeze gukoresha iShare nyuma.';
   }
 
   @override
@@ -1064,56 +1085,57 @@ class AppLocalizationsRw extends AppLocalizations {
   String get passengerLabel => 'Umugenzi';
 
   @override
-  String get loginRequired => 'Birakenewe Kwinjira';
+  String get loginRequired => 'Ugomba Kwinjira';
 
   @override
-  String get loginToBookMessage => 'Nyamuneka injira kugira ngo ubike umwanya.';
+  String get loginToBookMessage => 'Nyamuneka injira kugira ngo ukatishe.';
 
   @override
   String get bookingSuccessMessage =>
-      'Kubika byagenze neza! \n\nImyanya isigaye yavuguruwe.';
+      'Gukatisha Byakunze! \n\nImyanya yavuguruwe.';
 
   @override
   String get requestFailed => 'Byanze. Nyamuneka gerageza nanone.';
 
   @override
-  String get alreadyBookedError => 'Wamaze kubika uyu mwanya.';
+  String get alreadyBookedError => 'Wamaze gukatisha uru rugendo.';
 
   @override
-  String get requestBooking => 'Saba Kubika';
+  String get requestBooking => 'Saba Umwanya';
 
   @override
-  String get bannerTitle => 'Huza. Gabana. Ishimire.';
+  String get bannerTitle => 'Huza. Gabana Ibiciro.\nRyoha n\'Urugendo.';
 
   @override
-  String get bannerSubtitle => 'Genda neza ku giciro gito.';
+  String get bannerSubtitle =>
+      'Bona abagenzi mujya hamwe mugende neza ku giciro gito.';
 
   @override
-  String get premiumClass => 'VIP';
+  String get premiumClass => 'Premium Class';
 
   @override
-  String get premiumSubtitle => 'Ubwiza & Umuvuduko';
+  String get premiumSubtitle => 'Icyubahiro & Umuvuduko';
 
   @override
-  String get standardComfort => 'Bisanzwe';
+  String get standardComfort => 'Standard Comfort';
 
   @override
-  String get standardSubtitle => 'Ingendo zizewe';
+  String get standardSubtitle => 'Ingendo zizewe buri munsi';
 
   @override
-  String get economySaver => 'Bidahenze';
+  String get economySaver => 'Economy Saver';
 
   @override
-  String get economySubtitle => 'Igiciro gito';
+  String get economySubtitle => 'Ibiciro byiza kuri wowe';
 
   @override
   String get noRidesFound => 'Nta rugendo rubonetse';
 
   @override
-  String get offerRideInstead => 'Tanga \'Lift\'?';
+  String get offerRideInstead => 'Urashaka Gutanga Lift aho kugenda?';
 
   @override
-  String get soldOut => 'HASHIZE';
+  String get soldOut => 'BYASHIZE';
 
   @override
   String get oneSeatLeft => 'Hasigaye 1 gusa!';
@@ -1133,7 +1155,7 @@ class AppLocalizationsRw extends AppLocalizations {
   String get amenityLuggage => 'Imizigo';
 
   @override
-  String get amenityNoSmoking => 'Nta Tabi';
+  String get amenityNoSmoking => 'Nta Kunywa Tabi';
 
   @override
   String get amenityMusic => 'Umuziki';
@@ -1142,16 +1164,16 @@ class AppLocalizationsRw extends AppLocalizations {
   String get rideRequestsTitle => 'Ubusabe bw\'Ingendo';
 
   @override
-  String get noPendingRequests => 'Nta busabe buhari';
+  String get noPendingRequests => 'Nta busabe butegereje';
 
   @override
-  String get caughtUpMessage => 'Nta kindi gihari! Garuka myuma.';
+  String get caughtUpMessage => 'Nta kintu gishya! Reba myuma.';
 
   @override
   String get refresh => 'Vugurura';
 
   @override
-  String get unableToLoadRequests => 'Kubona ubusabe byanze';
+  String get unableToLoadRequests => 'Ntibishoboye gukura ubusabe';
 
   @override
   String get tryAgain => 'Gerageza Nanone';
@@ -1164,15 +1186,15 @@ class AppLocalizationsRw extends AppLocalizations {
 
   @override
   String requestingSeats(int count) {
-    return 'Ashaka imyanya $count';
+    return 'Gusaba Imyanya $count';
   }
 
   @override
-  String get routeInfoUnavailable => 'Amakuru y\'inzira ntahari';
+  String get routeInfoUnavailable => 'Amakuru y\'inzira ntaboneka';
 
   @override
-  String get reject => 'Hakana';
+  String get reject => 'Anga';
 
   @override
-  String get acceptRequest => 'Emeza';
+  String get acceptRequest => 'Emera Ubusabe';
 }
