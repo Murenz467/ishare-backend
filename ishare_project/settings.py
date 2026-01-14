@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     'corsheaders', 
     
     # Your apps
-    'api',
+    #'api',
     'subscriptions',
     'core',
     # 'trips',    # Ensure these are added if they are separate apps
