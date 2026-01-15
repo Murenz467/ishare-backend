@@ -1,4 +1,3 @@
-# subscriptions/models.py
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
@@ -15,14 +14,19 @@ class SubscriptionPlan(models.Model):
         return f"{self.name} - {self.price} RWF"
 
 class UserSubscription(models.Model):
-    # CHANGE IS HERE: related_name='subscription' -> related_name='driver_subscription'
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='driver_subscription')
+    # ✅ We keep 'driver_subscription' to match your database structure
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, 
+        on_delete=models.CASCADE, 
+        related_name='driver_subscription'
+    )
     plan = models.ForeignKey(SubscriptionPlan, on_delete=models.SET_NULL, null=True)
     start_date = models.DateTimeField(auto_now_add=True)
     end_date = models.DateTimeField()
     is_active = models.BooleanField(default=True)
 
     def save(self, *args, **kwargs):
+        # Automatically set end_date if it's missing
         if not self.end_date and self.plan:
             self.end_date = timezone.now() + timedelta(days=self.plan.duration_days)
         super().save(*args, **kwargs)
@@ -32,4 +36,7 @@ class UserSubscription(models.Model):
         return self.is_active and self.end_date > timezone.now()
 
     def __str__(self):
-        return f"{self.user.username} - {self.plan.name}"
+        # ✅ CRITICAL FIX: 
+        # We check if 'self.plan' exists. If it is None, we print "No Plan" instead of crashing.
+        plan_name = self.plan.name if self.plan else "No Plan"
+        return f"{self.user.username} - {plan_name}"
