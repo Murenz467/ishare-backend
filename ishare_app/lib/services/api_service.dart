@@ -423,8 +423,8 @@ class ApiService {
       // Get status as string (handle both string and enum cases)
       final statusStr = data['status']?.toString().toLowerCase();
       final isVerified = data['is_verified'] == true || 
-                       data['is_verified'] == 'true' || 
-                       statusStr == 'approved';
+                         data['is_verified'] == 'true' || 
+                         statusStr == 'approved';
       
       // Normalize the response
       final normalized = {
@@ -587,7 +587,7 @@ class ApiService {
     }
   }
 
-  // ✅ 2. NEW METHOD: Activate subscription
+  // ✅ 2. NEW METHOD: Activate subscription (Renamed to match your UI needs)
   Future<void> activateSubscription(int planId) async {
     try {
       await _dio.post(
@@ -599,12 +599,31 @@ class ApiService {
     }
   }
 
-  // ✅ 3. COMPATIBILITY: Checks access using the NEW backend
-  // This maps the response to what 'create_trips_screen.dart' expects
+  // ✅ 3. Helper for Free Trial (Calls same endpoint, specific name for clarity)
+  Future<void> activateFreeSubscription(int planId) async {
+    await activateSubscription(planId);
+  }
+
+  // ✅ 4. NEW METHOD: Submit Payment (This fixes your error!)
+  Future<void> submitSubscriptionPayment(int planId, String transactionId) async {
+    try {
+      await _dio.post(
+        '/api/subscriptions/pay/', 
+        data: {
+          'plan_id': planId,
+          'transaction_id': transactionId,
+        },
+      );
+    } on DioException catch (e) {
+      throw Exception(e.response?.data['message'] ?? "Failed to submit payment");
+    }
+  }
+
+  // ✅ 5. COMPATIBILITY: Checks access using the NEW backend
   Future<Map<String, dynamic>> checkSubscriptionAccess() async {
     try {
       // We check against the new 'my-subscription' endpoint
-      final response = await _dio.get('/api/subscriptions/my-subscription/');
+      final response = await _dio.get('/api/subscriptions/me/');
       
       // The new endpoint returns {'plan': ..., 'is_valid': true/false}
       final bool isValid = response.data['is_valid'] == true;
@@ -622,9 +641,7 @@ class ApiService {
     }
   }
 
-  // ✅ 4. COMPATIBILITY: Dummy payment processor
-  // This is kept so CreateTripScreen doesn't crash if it tries to call it,
-  // but logically users should use the new PaymentScreen flow.
+  // ✅ 6. COMPATIBILITY: Dummy payment processor
   Future<Map<String, dynamic>> processSubscriptionPayment({
     required String phoneNumber,
     String paymentMethod = 'mobile_money',
@@ -635,7 +652,7 @@ class ApiService {
 }
 
 // =====================================================
-// ✅ RIVERPOD PROVIDERS (MUST BE OUTSIDE THE CLASS)
+// ✅ RIVERPOD PROVIDERS
 // =====================================================
 
 final apiServiceProvider = Provider((ref) => ApiService());
