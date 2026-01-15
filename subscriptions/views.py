@@ -1,4 +1,3 @@
-# subscriptions/views.py
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
@@ -7,7 +6,7 @@ from datetime import timedelta
 from .models import SubscriptionPlan, UserSubscription
 from .serializers import SubscriptionPlanSerializer, UserSubscriptionSerializer
 
-# 1. List all available plans (Anyone can see this)
+# 1. List all available plans
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def get_plans(request):
@@ -15,18 +14,21 @@ def get_plans(request):
     serializer = SubscriptionPlanSerializer(plans, many=True)
     return Response(serializer.data)
 
-# 2. Get My Current Subscription Status
+# 2. Get My Current Subscription Status (FIXED TO STOP CRASHING)
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_my_subscription(request):
-    try:
-        sub = request.user.subscription
+    # Use filter().first() instead of request.user.subscription
+    # This returns None instead of crashing if no subscription exists
+    sub = UserSubscription.objects.filter(user=request.user).first()
+    
+    if sub:
         serializer = UserSubscriptionSerializer(sub)
         return Response(serializer.data)
-    except UserSubscription.DoesNotExist:
+    else:
         return Response({"message": "No active subscription", "is_valid": False})
 
-# 3. Activate Subscription (Call this AFTER successful payment in Flutter)
+# 3. Activate Subscription
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def subscribe_user(request):
