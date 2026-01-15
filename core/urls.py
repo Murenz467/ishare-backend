@@ -26,8 +26,8 @@ urlpatterns = [
     path('auth/forgot-password/', ForgotPasswordView.as_view(), name='forgot-password'),
     path('auth/reset-password/', ResetPasswordView.as_view(), name='reset-password'),
 
-    # 4. Driver Verification URLs (UPDATED TO MATCH FLUTTER)
-    # Changed from 'driver-verification' to 'driver' to match your logs
-    path('driver/verification-submit/', submit_driver_verification, name='submit-verification'),
+    # 4. Driver Verification URLs (MATCHING FLUTTER EXACTLY)
+    # ✅ Changed to 'verify/' to match your Flutter POST request
+    path('driver/verify/', submit_driver_verification, name='submit-verification'),
     path('driver/verification-status/', check_verification_status, name='check-verification'),
 ]
