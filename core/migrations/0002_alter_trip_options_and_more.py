@@ -15,6 +15,9 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        # ✅ SAFETY LINE: Deletes the old table if it exists so we can recreate it cleanly
+        migrations.RunSQL('DROP TABLE IF EXISTS driver_verifications CASCADE;'),
+
         migrations.AlterModelOptions(
             name='trip',
             options={'ordering': ['-created_at']},
