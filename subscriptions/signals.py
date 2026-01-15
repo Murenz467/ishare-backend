@@ -13,28 +13,29 @@ def assign_free_trial(sender, instance, created, **kwargs):
     """
     if created:
         # 1. Ensure the 'Free Trial' plan exists
+        # Removed 'is_active' from defaults to fix the error
         trial_plan, _ = SubscriptionPlan.objects.get_or_create(
             name="Free Trial",
             defaults={
                 'description': "First month free access to all features.",
                 'price': 0.00,
                 'duration_days': 30,
-                'is_active': True
             }
         )
 
         # 2. Ensure the 'Monthly Premium' plan exists (so they can pay later)
+        # Removed 'is_active' from defaults to fix the error
         SubscriptionPlan.objects.get_or_create(
             name="Monthly Premium",
             defaults={
                 'description': "Unlimited access to ride requests.",
                 'price': 5000.00,  # 5000 RWF
                 'duration_days': 30,
-                'is_active': True
             }
         )
 
         # 3. Assign the Free Trial to the new User
+        # We keep is_active=True here because UserSubscription usually has this field
         UserSubscription.objects.create(
             user=instance,
             plan=trial_plan,
