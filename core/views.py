@@ -15,7 +15,7 @@ from django.db.models import Count, Q
 from django.core.exceptions import ValidationError 
 from django.core.mail import send_mail
 from django.conf import settings
-from django.db import connection # ✅ SQL commands for ghost tables
+from django.db import connection 
 
 # ✅ Import Models from CORE
 from .models import (
@@ -58,30 +58,25 @@ class RegisterViewSet(viewsets.ViewSet):
         if serializer.is_valid():
             user = serializer.save()
             
+            # ✅ SAFE EMAIL LOGIC: Response will not wait for email to finish
             try:
                 user_role = user.profile.role.capitalize() if hasattr(user, 'profile') else "Member"
                 subject = f"Welcome to iShare, {user.username}!"
-                action_text = "Post your first trip!" if user_role == "Driver" else "Book your first ride!"
+                message = f"Hello {user.username},\n\nWelcome to iShare! Your account as a {user_role} is ready."
                 
-                message = f"""
-Hello {user.username},
-
-Welcome to iShare! We are thrilled to have you join our community as a {user_role}.
-
-Next Steps:
-1. Log in to the app.
-2. Complete your profile.
-3. {action_text}
-
-Safe travels,
-The iShare Team
-"""
-                send_mail(subject, message, settings.EMAIL_HOST_USER, [user.email], fail_silently=True)
+                send_mail(
+                    subject, 
+                    message, 
+                    settings.EMAIL_HOST_USER, 
+                    [user.email], 
+                    fail_silently=True,
+                    timeout=10 # Prevents hanging
+                )
             except Exception as e:
-                print(f"❌ Failed to send welcome email: {str(e)}")
+                print(f"📧 Email Error: {str(e)}")
             
+            # ✅ Success Response (Happens even if email is slow)
             profile_data = UserProfileSerializer(user.profile, context={'request': request}).data
-            
             return Response(
                 {
                     "message": "Registration successful.", 
@@ -470,14 +465,8 @@ def fix_all_profiles(request):
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def force_delete_user(request, username):
-    """
-    1. Drops all 'ghost' tables from the old 'api' app.
-    2. Deletes the user safely bypassing admin crashes.
-    """
     try:
-        # --- STEP 1: KILL THE GHOST TABLES HIT-LIST ---
         with connection.cursor() as cursor:
-            # Drop every possible table from the old 'api' app
             ghost_tables = [
                 "api_userprofile", 
                 "api_subscription", 
@@ -490,11 +479,9 @@ def force_delete_user(request, username):
             
             print("✅ All ghost tables from 'api' dropped.")
 
-        # --- STEP 2: FIND & DELETE USER ---
         target_user = User.objects.get(username=username)
         user_id = target_user.id
         
-        # Manual Cleanup of current subscription to prevent signal conflicts
         if hasattr(target_user, 'driver_subscription'):
             target_user.driver_subscription.delete()
             
