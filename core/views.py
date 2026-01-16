@@ -15,6 +15,7 @@ from django.db.models import Count, Q
 from django.core.exceptions import ValidationError 
 from django.core.mail import send_mail
 from django.conf import settings
+from django.db import connection # ✅ ADDED THIS IMPORT FOR SQL COMMANDS
 
 # ✅ Import Models from CORE
 from .models import (
@@ -476,31 +477,36 @@ def fix_all_profiles(request):
         "details": log
     })
 
-    # --- Add to bottom of core/views.py ---
-
+# =====================================================
+#  GHOST TABLE EXORCIST & USER DELETER
+# =====================================================
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def force_delete_user(request, username):
     """
-    Deletes a user by username, bypassing the Admin Panel crash.
-    Usage: /force-delete/username/
+    1. Drops the 'ghost' table (api_userprofile) blocking deletions.
+    2. Deletes the user safely.
     """
     try:
-        # 1. Find the user
+        # --- STEP 1: KILL THE GHOST TABLE ---
+        with connection.cursor() as cursor:
+            # We use IF EXISTS so it doesn't crash if the table is already gone
+            cursor.execute("DROP TABLE IF EXISTS api_userprofile CASCADE;")
+            print("✅ Ghost table 'api_userprofile' dropped successfully.")
+
+        # --- STEP 2: FIND & DELETE USER ---
         target_user = User.objects.get(username=username)
         user_id = target_user.id
         
-        # 2. Manual Cleanup (Safety First)
-        # We manually delete the subscription first to prevent signal crashes
+        # Manual Cleanup of current subscription (just in case)
         if hasattr(target_user, 'driver_subscription'):
             target_user.driver_subscription.delete()
             
-        # 3. Delete the User
         target_user.delete()
         
         return Response({
             "status": "success", 
-            "message": f"User '{username}' (ID: {user_id}) has been permanently deleted."
+            "message": f"User '{username}' (ID: {user_id}) has been DELETED. Ghost table removed."
         }, status=200)
 
     except User.DoesNotExist:
