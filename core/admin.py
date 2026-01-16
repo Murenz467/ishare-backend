@@ -1,50 +1,58 @@
 from django.contrib import admin
-from .models import UserProfile, Trip, Booking, DriverVerification, PaymentTransaction
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.auth.models import User
+from .models import UserProfile, Trip, Booking, Rating, DriverVerification
 
-# 1. User Profile Admin
-@admin.register(UserProfile)
-class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'phone_number', 'role', 'rating')
-    list_filter = ('role',)
+# 1. Define the Profile Inline (Safe)
+class UserProfileInline(admin.StackedInline):
+    model = UserProfile
+    can_delete = False
+    verbose_name_plural = 'User Profile'
+    fk_name = 'user'
+    extra = 0  # Don't show empty extra rows
 
-# 2. Driver Verification Admin (UPDATED LOGIC)
+# 2. Define the Custom User Admin
+class UserAdmin(BaseUserAdmin):
+    inlines = (UserProfileInline,)
+    list_display = ('username', 'email', 'get_role', 'is_active', 'date_joined')
+    list_select_related = ('profile',) # Optimization
+
+    def get_role(self, instance):
+        # Safe access to role
+        return instance.profile.role if hasattr(instance, 'profile') else 'No Profile'
+    get_role.short_description = 'Role'
+
+# 3. Register the new User Admin
+# We safely unregister first to avoid "Already Registered" errors
+try:
+    admin.site.unregister(User)
+except admin.sites.NotRegistered:
+    pass
+admin.site.register(User, UserAdmin)
+
+# --- Other Models ---
+
+@admin.register(Trip)
+class TripAdmin(admin.ModelAdmin):
+    list_display = ('id', 'driver_name', 'start_location_name', 'destination_name', 'departure_time', 'is_active')
+    list_filter = ('is_active', 'departure_time')
+    search_fields = ('start_location_name', 'destination_name')
+
+    def driver_name(self, obj):
+        return obj.driver.username if obj.driver else "Unknown"
+
+@admin.register(Booking)
+class BookingAdmin(admin.ModelAdmin):
+    list_display = ('id', 'passenger_name', 'trip_info', 'status', 'seats_booked')
+    list_filter = ('status',)
+
+    def passenger_name(self, obj):
+        return obj.passenger.username if obj.passenger else "Unknown"
+    
+    def trip_info(self, obj):
+        return f"Trip {obj.trip.id}" if obj.trip else "Unknown Trip"
+
 @admin.register(DriverVerification)
 class DriverVerificationAdmin(admin.ModelAdmin):
     list_display = ('user', 'full_name', 'status', 'submitted_at')
-    list_filter = ('status',)
-    actions = ['approve_driver', 'reject_driver']
-
-    # ✅ THIS IS THE MAGIC PART
-    def approve_driver(self, request, queryset):
-        # 1. Update the Verification Status to 'Approved'
-        queryset.update(status='approved')
-        
-        # 2. Loop through all selected users and upgrade their role to 'Driver'
-        for verification in queryset:
-            user_profile = verification.user  # Get the user
-            user_profile.role = 'driver'      # Switch role
-            user_profile.save()               # Save the change
-            
-    approve_driver.short_description = "Approve selected drivers (And upgrade Role)"
-
-    def reject_driver(self, request, queryset):
-        queryset.update(status='rejected')
-    reject_driver.short_description = "Reject selected drivers"
-
-# 3. Trip Admin
-@admin.register(Trip)
-class TripAdmin(admin.ModelAdmin):
-    list_display = ('driver', 'start_location_name', 'destination_name', 'price_per_seat', 'is_active')
-    list_filter = ('is_active', 'created_at')
-
-# 4. Booking Admin
-@admin.register(Booking)
-class BookingAdmin(admin.ModelAdmin):
-    list_display = ('trip', 'passenger', 'seats_booked', 'status', 'total_price')
-    list_filter = ('status',)
-
-# 5. Payment Admin
-@admin.register(PaymentTransaction)
-class PaymentTransactionAdmin(admin.ModelAdmin):
-    list_display = ('booking', 'amount', 'status', 'provider', 'paid_at')
     list_filter = ('status',)
