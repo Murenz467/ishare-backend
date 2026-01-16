@@ -200,7 +200,6 @@ class TripViewSet(viewsets.ModelViewSet):
     parser_classes = [MultiPartParser, FormParser, JSONParser]
     permission_classes = [IsAuthenticated, IsDriverOrReadOnly]
     
-    # Enable filtering
     filter_backends = [filters.SearchFilter]
     search_fields = ['start_location_name', 'destination_name']
 
@@ -225,14 +224,13 @@ class TripViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         try:
-            # 1. SUBSCRIPTION CHECK (Fixed Logic)
-            
+            # 1. SUBSCRIPTION CHECK (Secure & Crash Proof)
             has_active_sub = UserSubscription.objects.filter(
                 user=request.user, 
                 is_active=True
             ).exists()
             
-            # ✅ SECURITY FIX: If no active sub, block IMMEDIATELY
+            # 🛑 STOP HERE if no subscription
             if not has_active_sub:
                  return Response({
                     'error': 'You must have an active subscription to post a ride.'
@@ -245,6 +243,7 @@ class TripViewSet(viewsets.ModelViewSet):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
             
         except Exception as e:
+            # This catches crashes and shows you the error instead of 500
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
     def perform_create(self, serializer):
@@ -258,7 +257,6 @@ class TripViewSet(viewsets.ModelViewSet):
             if new_car_photo: profile.vehicle_photo = new_car_photo
             if new_car_name or new_car_photo: profile.save()
 
-        # Save with current user as driver
         serializer.save(driver=self.request.user)
 
 # =====================================================
