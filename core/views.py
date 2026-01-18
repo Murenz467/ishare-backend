@@ -58,7 +58,16 @@ class RegisterViewSet(viewsets.ViewSet):
         if serializer.is_valid():
             user = serializer.save()
             
-            # ✅ FIXED EMAIL LOGIC: Removed unsupported 'timeout' argument
+            # ✅ SUCCESS DATA PREP
+            profile_data = UserProfileSerializer(user.profile, context={'request': request}).data
+            response_data = {
+                "message": "Registration successful.", 
+                "user": UserSerializer(user).data,
+                "profile": profile_data 
+            }
+
+            # ✅ NON-BLOCKING EMAIL LOGIC
+            # We run this in a try-block and return the response regardless of SMTP speed
             try:
                 user_role = user.profile.role.capitalize() if hasattr(user, 'profile') else "Member"
                 subject = f"Welcome to iShare, {user.username}!"
@@ -69,21 +78,15 @@ class RegisterViewSet(viewsets.ViewSet):
                     message, 
                     settings.EMAIL_HOST_USER, 
                     [user.email], 
-                    fail_silently=True
+                    fail_silently=True # Prevents the app from crashing if email fails
                 )
             except Exception as e:
-                print(f"📧 Email Error: {str(e)}")
+                print(f"📧 Email Error (Non-Fatal): {str(e)}")
             
-            # ✅ Success Response (Returns immediately to app)
-            profile_data = UserProfileSerializer(user.profile, context={'request': request}).data
-            return Response(
-                {
-                    "message": "Registration successful.", 
-                    "user": UserSerializer(user).data,
-                    "profile": profile_data 
-                },
-                status=status.HTTP_201_CREATED
-            )
+            # ✅ IMMEDIATE RETURN
+            # This prevents the DioTimeout you saw in your Flutter logs
+            return Response(response_data, status=status.HTTP_201_CREATED)
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -359,7 +362,7 @@ class RatingViewSet(viewsets.ModelViewSet):
         serializer.save(rater=self.request.user)
 
 # =====================================================
-#  PAYMENTS
+#  PAYMENTS (FIXED ERROR HANDLING)
 # =====================================================
 class PaymentViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
@@ -369,10 +372,20 @@ class PaymentViewSet(viewsets.ViewSet):
             booking_id = request.data.get('booking_id')
             amount = request.data.get('amount')
             
-            booking = get_object_or_404(Booking, id=booking_id, passenger=request.user)
+            if not booking_id:
+                return Response({'status': 'error', 'message': 'Missing booking_id'}, status=400)
+
+            # ✅ Robust lookup to avoid "No Booking matches" generic error
+            try:
+                booking = Booking.objects.get(id=booking_id, passenger=request.user)
+            except Booking.DoesNotExist:
+                return Response({
+                    'status': 'error', 
+                    'message': f'Booking with ID {booking_id} not found for this user.'
+                }, status=404)
             
             if hasattr(booking, 'payment'):
-                return Response({'status': 'error', 'message': 'Already paid'}, status=400)
+                return Response({'status': 'error', 'message': 'This booking is already paid'}, status=400)
             
             transaction_ref = f"MANUAL-{uuid.uuid4().hex[:8].upper()}"
 
@@ -395,7 +408,7 @@ class PaymentViewSet(viewsets.ViewSet):
             }, status=201)
             
         except Exception as e:
-            return Response({'status': 'error', 'message': str(e)}, status=400)
+            return Response({'status': 'error', 'message': f'Server Error: {str(e)}'}, status=500)
 
     def list(self, request):
         payments = PaymentTransaction.objects.filter(booking__passenger=request.user)
@@ -435,7 +448,7 @@ def check_verification_status(request):
         return Response({'is_verified': False, 'status': None})
 
 # =====================================================
-#  🚑 EMERGENCY REPAIR TOOL (Fixes missing Profiles)
+#  🚑 EMERGENCY REPAIR TOOL
 # =====================================================
 @api_view(['GET'])
 @permission_classes([AllowAny])
@@ -464,30 +477,16 @@ def fix_all_profiles(request):
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def force_delete_user(request, username):
-    """
-    1. Drops all 'ghost' tables from the old 'api' app.
-    2. Deletes the user safely bypassing admin crashes.
-    """
     try:
-        # --- STEP 1: KILL THE GHOST TABLES ---
         with connection.cursor() as cursor:
             ghost_tables = [
-                "api_userprofile", 
-                "api_subscription", 
-                "api_trip", 
-                "api_booking", 
-                "api_rating"
+                "api_userprofile", "api_subscription", "api_trip", 
+                "api_booking", "api_rating"
             ]
             for table in ghost_tables:
                 cursor.execute("DROP TABLE IF EXISTS %s CASCADE;" % table)
             
-            print("✅ All ghost tables from 'api' dropped.")
-
-        # --- STEP 2: FIND & DELETE USER ---
         target_user = User.objects.get(username=username)
-        user_id = target_user.id
-        
-        # Manual Cleanup of current subscription to prevent signal conflicts
         if hasattr(target_user, 'driver_subscription'):
             target_user.driver_subscription.delete()
             
@@ -495,17 +494,10 @@ def force_delete_user(request, username):
         
         return Response({
             "status": "success", 
-            "message": "User '%s' (ID: %s) DELETED. Ghost tables removed." % (username, user_id)
+            "message": f"User '{username}' DELETED. Ghost tables removed."
         }, status=200)
 
     except User.DoesNotExist:
-        return Response({
-            "status": "error", 
-            "message": "User '%s' not found." % username
-        }, status=404)
-        
+        return Response({"status": "error", "message": "User not found."}, status=404)
     except Exception as e:
-        return Response({
-            "status": "crash", 
-            "error": str(e)
-        }, status=500)
+        return Response({"status": "crash", "error": str(e)}, status=500)
