@@ -264,5 +264,5 @@ EMAIL_USE_TLS = False  # Turn off TLS
 EMAIL_USE_SSL = True   # Turn on SSL
 
 EMAIL_HOST_USER = 'murenzicharles24@gmail.com' 
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD') 
+EMAIL_HOST_PASSWORD = os.environ.get('itqi pooh lekm ayph') 
 DEFAULT_FROM_EMAIL = 'ISHARE Support <murenzicharles24@gmail.com>'
