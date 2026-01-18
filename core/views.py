@@ -16,6 +16,7 @@ from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from django.conf import settings
 from django.db import connection 
+import threading
 
 # ✅ Import Models from CORE
 from .models import (
@@ -45,9 +46,21 @@ except ImportError:
 
 User = get_user_model()
 
-# =====================================================
-#  REGISTER & AUTH
-# =====================================================
+def send_welcome_email_task(user_email, username, user_role):
+    try:
+        subject = f"Welcome to iShare, {username}!"
+        message = f"Hello {username},\n\nWelcome to iShare! Your account as a {user_role} is ready."
+        
+        send_mail(
+            subject, 
+            message, 
+            settings.EMAIL_HOST_USER, 
+            [user_email], 
+            fail_silently=True
+        )
+    except Exception as e:
+        # This print will show up in your logs, but won't crash the server
+        print(f"❌ Background Email Error: {str(e)}")
 
 class RegisterViewSet(viewsets.ViewSet):
     permission_classes = [AllowAny]
@@ -66,25 +79,18 @@ class RegisterViewSet(viewsets.ViewSet):
                 "profile": profile_data 
             }
 
-            # ✅ NON-BLOCKING EMAIL LOGIC
-            # We run this in a try-block and return the response regardless of SMTP speed
-            try:
-                user_role = user.profile.role.capitalize() if hasattr(user, 'profile') else "Member"
-                subject = f"Welcome to iShare, {user.username}!"
-                message = f"Hello {user.username},\n\nWelcome to iShare! Your account as a {user_role} is ready."
-                
-                send_mail(
-                    subject, 
-                    message, 
-                    settings.EMAIL_HOST_USER, 
-                    [user.email], 
-                    fail_silently=True # Prevents the app from crashing if email fails
-                )
-            except Exception as e:
-                print(f"📧 Email Error (Non-Fatal): {str(e)}")
+            # ✅ NON-BLOCKING EMAIL LOGIC (THREADING FIX)
+            # Instead of sending immediately, we start a background thread.
+            user_role = user.profile.role.capitalize() if hasattr(user, 'profile') else "Member"
+            
+            email_thread = threading.Thread(
+                target=send_welcome_email_task, # Call the helper function
+                args=(user.email, user.username, user_role) # Pass the data it needs
+            )
+            email_thread.start() # 🚀 Runs instantly, does not block return!
             
             # ✅ IMMEDIATE RETURN
-            # This prevents the DioTimeout you saw in your Flutter logs
+            # The server responds NOW. It does not wait for the email to finish.
             return Response(response_data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
