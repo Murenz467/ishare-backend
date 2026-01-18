@@ -254,15 +254,17 @@ SIMPLE_JWT = {
     'TOKEN_TYPE_CLAIM': 'token_type',
 }
 
-# 📧 EMAIL CONFIGURATION
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 
-# 🔄 CHANGE: Switch from TLS (587) to SSL (465)
+# SSL Settings (Correct for Port 465)
 EMAIL_PORT = 465
-EMAIL_USE_TLS = False  # Turn off TLS
-EMAIL_USE_SSL = True   # Turn on SSL
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
 
-EMAIL_HOST_USER = 'murenzicharles24@gmail.com' 
-EMAIL_HOST_PASSWORD = os.environ.get('itqi pooh lekm ayph') 
+EMAIL_HOST_USER = 'murenzicharles24@gmail.com'
+
+# ✅ CORRECTED LINE: Put the password directly in quotes
+EMAIL_HOST_PASSWORD = 'itqi pooh lekm ayph' 
+
 DEFAULT_FROM_EMAIL = 'ISHARE Support <murenzicharles24@gmail.com>'
