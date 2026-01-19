@@ -106,56 +106,20 @@ class ApiService {
     }
   }
 
-  // ✅ Register with "Ghost Fix"
-  Future<void> register({
-    required String username,
-    required String password,
-    required String email,
-    required String role,
-    String? firstName,
-    String? lastName,
-    String? vehicleModel,
-    String? plateNumber,
-    XFile? vehiclePhoto,
-  }) async {
+  // ✅ Register (Modified to accept FormData directly)
+  Future<void> register(FormData data) async {
     try {
-      // ... (Your existing data preparation code remains here) ...
-      final Map<String, dynamic> dataMap = {
-        'username': username,
-        'password': password,
-        'password2': password,
-        'email': email,
-        'first_name': firstName,
-        'last_name': lastName,
-        'role': role,
-      };
-
-      if (role == 'driver') {
-        if (vehicleModel != null) dataMap['vehicle_model'] = vehicleModel;
-        if (plateNumber != null) dataMap['plate_number'] = plateNumber;
-      }
-
-      final formData = FormData.fromMap(dataMap);
-
-      if (vehiclePhoto != null) {
-        final bytes = await vehiclePhoto.readAsBytes();
-        formData.files.add(MapEntry(
-          'vehicle_photo',
-          MultipartFile.fromBytes(bytes, filename: vehiclePhoto.name),
-        ));
-      }
-
       // SEND REQUEST
       await _dio.post(
         '/api/register/',
-        data: formData,
+        data: data,
         options: Options(contentType: 'multipart/form-data'),
       );
       
       debugPrint('✅ Registration successful');
 
     } on DioException catch (e) {
-      // 🛑 THIS IS THE FIX 🛑
+      // 🛑 GHOST FIX LOGIC 🛑
       
       // 1. If it times out (Server took too long), assume success
       if (e.type == DioExceptionType.receiveTimeout || 
@@ -168,8 +132,8 @@ class ApiService {
       if (e.response?.statusCode == 400) {
         final errorData = e.response?.data.toString() ?? "";
         if (errorData.contains("already exists") || errorData.contains("unique")) {
-           // We throw a friendly error telling them to login
-           throw Exception("Account already exists. Please login.");
+            // We throw a friendly error telling them to login
+            throw Exception("Account already exists. Please login.");
         }
       }
 
@@ -177,6 +141,7 @@ class ApiService {
       throw Exception('Registration failed: ${e.response?.data ?? e.message}');
     }
   }
+
   // ✅ Request OTP (Forgot Password)
   Future<void> requestPasswordReset(String email) async {
     try {

@@ -1,9 +1,9 @@
-import 'dart:typed_data'; 
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ishare_app/l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:dio/dio.dart'; // ✅ Needed for error handling
+import 'package:dio/dio.dart'; 
 
 import '../../services/api_service.dart';
 import '../../constants/app_theme.dart';
@@ -16,19 +16,23 @@ class RegisterScreen extends ConsumerStatefulWidget {
 }
 
 class _RegisterScreenState extends ConsumerState<RegisterScreen> {
+  // Controllers
   final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
   
+  // Driver specific controllers
   final _vehicleModelController = TextEditingController();
   final _plateNumberController = TextEditingController();
   
+  // Image handling
   XFile? _vehiclePhoto; 
   Uint8List? _vehiclePhotoBytes;
   final ImagePicker _picker = ImagePicker();
 
+  // State variables
   bool _isLoading = false;
   bool _isPasswordVisible = false;
   bool _isDriver = false; 
@@ -60,14 +64,119 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     }
   }
 
-  // ✅ New Helper: Check Password Security
   bool _isPasswordValid(String password) {
     bool hasMinLength = password.length >= 8;
     bool hasDigit = password.contains(RegExp(r'[0-9]'));
     return hasMinLength && hasDigit;
   }
 
- Future<void> _register() async
+  Future<void> _register() async {
+    // 1. Validation
+    if (_usernameController.text.isEmpty ||
+        _emailController.text.isEmpty ||
+        _passwordController.text.isEmpty ||
+        _firstNameController.text.isEmpty) {
+      _showError("Please fill in all required fields");
+      return;
+    }
+
+    if (!_isPasswordValid(_passwordController.text)) {
+      _showError("Password must be 8+ chars and include a number");
+      return;
+    }
+
+    if (_isDriver) {
+      if (_vehicleModelController.text.isEmpty ||
+          _plateNumberController.text.isEmpty) {
+        _showError("Drivers must provide vehicle details");
+        return;
+      }
+      if (_vehiclePhoto == null) {
+        _showError("Drivers must upload a vehicle photo");
+        return;
+      }
+    }
+
+    setState(() => _isLoading = true);
+
+    try {
+      // 2. Prepare Data
+      final Map<String, dynamic> formMap = {
+        "username": _usernameController.text.trim(),
+        "email": _emailController.text.trim(),
+        "password": _passwordController.text,
+        "password2": _passwordController.text, // ✅ Added for backend compatibility
+        "first_name": _firstNameController.text.trim(),
+        "last_name": _lastNameController.text.trim(),
+        "role": _isDriver ? "driver" : "passenger",
+      };
+
+      if (_isDriver) {
+        formMap["vehicle_model"] = _vehicleModelController.text.trim();
+        formMap["plate_number"] = _plateNumberController.text.trim();
+      }
+
+      final formData = FormData.fromMap(formMap);
+
+      // 3. Attach Photo (✅ WEB SAFE METHOD)
+      if (_isDriver && _vehiclePhoto != null) {
+        // We use bytes because 'path' does not work reliably on Chrome/Web
+        final bytes = await _vehiclePhoto!.readAsBytes();
+        formData.files.add(MapEntry(
+          "vehicle_photo",
+          MultipartFile.fromBytes(
+            bytes,
+            filename: "vehicle_photo.jpg",
+          ),
+        ));
+      }
+
+      // 4. API Call - ✅ FIXED: Using Riverpod ref
+      await ref.read(apiServiceProvider).register(formData);
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Account created! Please login."),
+            backgroundColor: Colors.green,
+          ),
+        );
+        Navigator.pop(context); // Return to login
+      }
+
+    } on DioException catch (e) {
+      // 🔍 DETAILED ERROR LOGGING
+      if (e.response?.data != null) {
+        debugPrint("❌ SERVER ERROR DETAILS: ${e.response?.data}");
+      }
+
+      // Handle Server Errors
+      String message = "Registration failed";
+      
+      // Try to parse Django style errors { "field": ["Error"] }
+      final data = e.response?.data;
+      if (data is Map<String, dynamic>) {
+        if (data.containsKey('detail')) message = data['detail'];
+        else if (data.containsKey('message')) message = data['message'];
+        else if (data.containsKey('error')) message = data['error'];
+        else if (data.isNotEmpty) {
+           // Grab the first field error (e.g., username: ["Already exists"])
+           final firstKey = data.keys.first;
+           final firstError = data[firstKey];
+           if (firstError is List) {
+             message = "$firstKey: ${firstError[0]}";
+           } else {
+             message = "$firstKey: $firstError";
+           }
+        }
+      } else if (e.response?.statusMessage != null) {
+        message = e.response!.statusMessage!;
+      }
+
+      _showError(message);
+    } catch (e) {
+      debugPrint("❌ UNKNOWN ERROR: $e");
+      _showError("An unexpected error occurred.");
     } finally {
       if (mounted) {
         setState(() => _isLoading = false);
@@ -76,9 +185,10 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   }
 
   void _showError(String message) {
+    if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(message), // Displays the exact error text
+        content: Text(message),
         backgroundColor: Colors.redAccent,
         behavior: SnackBarBehavior.floating,
         duration: const Duration(seconds: 4),
@@ -190,7 +300,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 isPassword: true
               ),
               const SizedBox(height: 8),
-              // Helper text for password requirements
               Padding(
                 padding: const EdgeInsets.only(left: 12),
                 child: Text(

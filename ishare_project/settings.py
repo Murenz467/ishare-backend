@@ -263,8 +263,6 @@ EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 
 EMAIL_HOST_USER = 'murenzicharles24@gmail.com'
-
-# ✅ CORRECTED LINE: Put the password directly in quotes
-EMAIL_HOST_PASSWORD = 'itqi pooh lekm ayph' 
+EMAIL_HOST_PASSWORD = 'itqipoohlekmayph' # Spaces removed
 
 DEFAULT_FROM_EMAIL = 'ISHARE Support <murenzicharles24@gmail.com>'
